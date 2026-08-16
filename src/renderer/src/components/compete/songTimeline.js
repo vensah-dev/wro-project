@@ -1,5 +1,5 @@
 // ============================================================
-// SONG TIMELINE
+// SONG TIMELINE — Compete mode only
 // ============================================================
 // Maps seconds-into-the-song -> which move should be performed, and the
 // window of time it's valid for. These numbers are a generic placeholder
@@ -9,8 +9,6 @@
 // recording. Play your own audio file, note down the real timestamps where
 // each verse starts, and edit the numbers below to match. This array is
 // pure timing data — no lyrics or audio content live in this file.
-
-
 export const SONG_TIMELINE = [
   { id: 'baby-1', moveId: 'baby', start: 4, end: 7 },
   { id: 'baby-2', moveId: 'baby', start: 7, end: 12 },

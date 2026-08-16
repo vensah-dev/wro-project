@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { CONFIG } from '../config';
 
-export function JudgementPopup({ judgement }) {
+export default function JudgementPopup({ judgement }) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function ProgressBar({ progress }) {
+export default function ProgressBar({ progress }) {
   return (
     <div className="absolute left-0 top-0 z-20 h-1.5 w-full bg-white/10">
       <div

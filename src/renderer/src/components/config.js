@@ -1,15 +1,8 @@
 // ============================================================
-// CONFIG
+// SHARED CONFIG — used by both Compete and Learn mode
 // ============================================================
-
-// Path to the song audio file. Baby Shark is copyrighted — this project does
-// NOT ship the actual track or its lyrics. Drop your own licensed copy at
-// this path (or point this at wherever you host it) before running Compete
-// mode. If the file is missing, the UI shows a warning instead of failing silently.
-import audioSrc from '../../assets/baby-shark-song.mov';
-
 export const CONFIG = {
-  // --- pose detection & matching (unchanged from before) ---
+  // --- pose detection & matching ---
   DETECTION_CONFIDENCE: 0.6,
   ANGLE_TOLERANCE_DEG: 30,
   RATIO_TOLERANCE: 0.5,
@@ -24,9 +17,12 @@ export const CONFIG = {
   COMBO_STEP: 0.1,          // multiplier gained per consecutive non-miss window
   COMBO_MAX_MULTIPLIER: 2,  // cap on the combo multiplier
   JUDGEMENT_DISPLAY_MS: 1000,
-};
 
-export const AUDIO_SRC = audioSrc;
+  // --- learn mode (self-paced, no timer/points) ---
+  LEARN_GOOD_THRESHOLD: 0.65,        // per-criterion / overall score above this counts as "good"
+  LEARN_STREAK_TO_SUGGEST_NEXT: 45,  // ~1.5s of sustained good pose before nudging the Next button
+  GHOST_OPACITY: 0.35,               // opacity of the target-pose overlay drawn on the camera feed
+};
 
 export const LM = {
   LEFT_SHOULDER: 11, RIGHT_SHOULDER: 12,

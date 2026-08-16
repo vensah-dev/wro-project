@@ -1,8 +1,8 @@
-// ============================================================
-// HOOK: song playback + tight rAF-driven time sync
-// ============================================================
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
+// ============================================================
+// HOOK: song playback + tight rAF-driven time sync — Compete mode only
+// ============================================================
 export function useSongPlayback(audioRef) {
   const [currentTime, setCurrentTime] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);

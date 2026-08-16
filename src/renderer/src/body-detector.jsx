@@ -1,61 +1,17 @@
-import React, { useRef, useState } from 'react';
-import {
-  AUDIO_SRC,
-  useCompeteMode,
-  WebcamFeed,
-  ProgressBar,
-  ScoreHud,
-  NextMovePanel,
-  JudgementPopup,
-  PersonNotVisibleBanner,
-  AudioMissingBanner,
-  StartOverlay,
-  EndScreen,
-} from './components/danceGame';
+import React, { useState } from 'react';
+import MainMenu from './main-menu';
+import CompeteMode from './components/compete/CompeteMode';
+import LearnMode from './components/learn/LearnMode';
+import { getSongById } from './components/songs';
 
-// ============================================================
-// MAIN COMPONENT
-// ============================================================
-export default function CompeteMode() {
-  const videoRef = useRef(null);
-  const canvasRef = useRef(null);
-  const guideCanvasRef = useRef(null);
-  const audioRef = useRef(null);
+export default function BodyDetector() {
+  const [selection, setSelection] = useState(null); // null | { songId, mode: 'learn' | 'compete' }
 
-  const [audioMissing, setAudioMissing] = useState(false);
+  const handleExit = () => setSelection(null);
+  const handleSelect = (songId, mode) => setSelection({ songId, mode });
+  var song = selection ? getSongById(selection.songId) : null;
 
-  const {
-    isPlaying, hasEnded, progress, start, handleEnded,
-    isPersonVisible, expectedMove, nextMove,
-    score, combo, judgement, windowResults,
-  } = useCompeteMode({ videoRef, canvasRef, guideCanvasRef, audioRef });
-
-  return (
-    <div className="relative flex h-screen w-screen items-center justify-center overflow-hidden bg-neutral-900">
-      <WebcamFeed videoRef={videoRef} canvasRef={canvasRef} />
-
-      <audio
-        ref={audioRef}
-        src={AUDIO_SRC}
-        preload="auto"
-        onEnded={handleEnded}
-        onError={() => setAudioMissing(true)}
-      />
-
-      {isPlaying && (
-        <>
-          <ProgressBar progress={progress} />
-          <ScoreHud score={score} combo={combo} />
-          <NextMovePanel guideCanvasRef={guideCanvasRef} expectedMove={expectedMove} nextMove={nextMove} />
-          <JudgementPopup judgement={judgement} />
-          <PersonNotVisibleBanner isPersonVisible={isPersonVisible} isPlaying={isPlaying} />
-        </>
-      )}
-
-      <AudioMissingBanner visible={audioMissing} />
-
-      {!isPlaying && !hasEnded && <StartOverlay onStart={start} />}
-      {hasEnded && <EndScreen score={score} windowResults={windowResults} onRestart={start} />}
-    </div>
-  );
+  if (selection?.mode === 'learn' && song) return <LearnMode song={getSongById(selection.songId)} onExit={handleExit} />;
+  if (selection?.mode === 'compete' && song) return <CompeteMode song={getSongById(selection.songId)} onExit={handleExit} />;
+  return <MainMenu onSelect={handleSelect} />;
 }

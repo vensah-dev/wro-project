@@ -1,8 +1,8 @@
-// ============================================================
-// GEOMETRY HELPERS
-// ============================================================
 import { LM } from './config';
 
+// ============================================================
+// GEOMETRY HELPERS — used by both Compete and Learn mode
+// ============================================================
 export function calcAngle(a, b, c) {
   const rad = Math.atan2(c.y - b.y, c.x - b.x) - Math.atan2(a.y - b.y, a.x - b.x);
   let deg = Math.abs((rad * 180) / Math.PI);

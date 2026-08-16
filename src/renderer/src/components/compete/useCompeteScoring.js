@@ -1,11 +1,12 @@
-// ============================================================
-// HOOK: per-window scoring (accuracy -> Perfect/Good/Miss -> points+combo)
-// ============================================================
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { CONFIG } from '../config';
-import { SONG_TIMELINE } from '../songTimeline';
 
-export function useCompeteScoring({ currentTime, currentEntry, confirmedMoveId, isPlaying }) {
+// ============================================================
+// HOOK: per-window scoring — Compete mode only
+// ============================================================
+// `timeline` is now passed in (from the current song) instead of a fixed
+// module-level import, so this works for any song.
+export function useCompeteScoring({ currentTime, currentEntry, confirmedMoveId, isPlaying, timeline }) {
   const activeWindowIdRef = useRef(null);
   const frameCountsRef = useRef({ correct: 0, total: 0 });
   const comboRef = useRef(0);
@@ -37,10 +38,10 @@ export function useCompeteScoring({ currentTime, currentEntry, confirmedMoveId, 
   // finalize whatever window is active right now — used both on natural
   // window transitions and when the song ends mid-window
   const finalizeActiveWindow = useCallback(() => {
-    const entry = SONG_TIMELINE.find((e) => e.id === activeWindowIdRef.current);
+    const entry = timeline.find((e) => e.id === activeWindowIdRef.current);
     if (entry) finalizeWindow(entry);
     activeWindowIdRef.current = null;
-  }, [finalizeWindow]);
+  }, [finalizeWindow, timeline]);
 
   useEffect(() => {
     if (!isPlaying) return;
@@ -49,7 +50,7 @@ export function useCompeteScoring({ currentTime, currentEntry, confirmedMoveId, 
 
     if (entryId !== activeWindowIdRef.current) {
       // moved into a new window (or a gap) — finalize the one we just left
-      const prevEntry = SONG_TIMELINE.find((e) => e.id === activeWindowIdRef.current);
+      const prevEntry = timeline.find((e) => e.id === activeWindowIdRef.current);
       if (prevEntry) finalizeWindow(prevEntry);
       frameCountsRef.current = { correct: 0, total: 0 };
       activeWindowIdRef.current = entryId;
@@ -59,7 +60,7 @@ export function useCompeteScoring({ currentTime, currentEntry, confirmedMoveId, 
       frameCountsRef.current.total += 1;
       if (confirmedMoveId === currentEntry.moveId) frameCountsRef.current.correct += 1;
     }
-  }, [currentTime, currentEntry, confirmedMoveId, isPlaying, finalizeWindow]);
+  }, [currentTime, currentEntry, confirmedMoveId, isPlaying, finalizeWindow, timeline]);
 
   const reset = useCallback(() => {
     activeWindowIdRef.current = null;

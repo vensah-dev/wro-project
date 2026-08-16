@@ -1,75 +1,45 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
+import { SONGS } from './components/songs';
+import { useState } from 'react';
 
-export default function MainMenu() {
-  const videoRef = useRef(null);
-
-  useEffect(() => {
-    const videoElement = videoRef.current;
-    
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.getUserMedia({ video: true })
-        .then(stream => {
-          videoElement.srcObject = stream;
-        })
-        .catch(err => {
-          console.error("Error accessing webcam:", err);
-        });
-    }
-
-    return () => {
-      if (videoElement && videoElement.srcObject) {
-        const tracks = videoElement.srcObject.getTracks();
-        tracks.forEach(track => track.stop());
-      }
-    };
-  }, []);
-
-  const handleLearnClick = () => {
-    console.log('Learn mode selected');
-  };
-
-  const handleCompeteClick = () => {
-    console.log('Compete mode selected');
-  };
-
-  const handleFusionClick = () => {
-    console.log('Fusion mode selected');
-  };
-
-  const buttonStyle = "hover:opacity-50 hover:pl-4 text-5xl font-thin"
-
+export default function MainMenu({ onSelect }) {
+  const [selectedSongId, setSelectedSongId] = useState(null);
   return (
-    <div className="w-dvw h-dvh">
+    <div className="relative flex h-screen w-screen flex-col items-end justify-center gap-6 bg-gray-50">
 
-      <div className="absolute z-0 h-full w-full items-end justify-end flex">
-        <video
-          ref={videoRef}
-          autoPlay
-          playsInline
-          className="h-full w-[59vw] object-cover -scale-x-100 "
-        />
-      </div> 
-      
-      <div className="absolute z-50 h-full bg-black w-[41vw]"/>
+      <ul className={`flex w-[75vw] flex-col gap-3 items-end  ${SONGS.length > 10 ? 'justify-start' : 'justify-center'} overflow-y-scroll py-8`}>
+        {SONGS.map((song) => (
+          <li
+            key={song.id}
+            className={`group relative flex items-center justify-between gap-4 overflow-hidden rounded-l-md px-3 py-6 hover:w-[75vw] transition-all duration-300 ease-in-out hover:text-white ${selectedSongId === song.id ? 'bg-pink-500/75 w-[60vw] text-white' : 'bg-pink-500/25 w-[45vw] text-white/50'}`}
+            onClick={() => setSelectedSongId(song.id)}
+          >
+            <span className="truncate text-xl font-bold">{song.title}</span>
+          </li>
+        ))}
+      </ul>
 
-      <div className="absolute z-100 py-16 px-24">
-        
-        <h1 className="text-[10rem] text-pink-300 font-semibold">Name</h1>
-        
-        <div className="flex flex-col gap-8 items-start text-pink-300">
-          <button className={buttonStyle} onClick={handleLearnClick}>
+      <div className="flex justify-between w-full h-shrink items-center p-8 self-end absolute bottom-0">
+        <p className="text-5xl font-bold text-black/75">
+          [INSERT GAME NAME]
+        </p>
+
+        <div className="flex gap-4">
+          <button
+            onClick={() => onSelect(selectedSongId, 'learn')}
+            className="rounded-md px-8 py-4 text-xl font-semibold text-black transition hover:opacity-50 active:scale-95"
+          >
             Learn
           </button>
-          <button className={buttonStyle} onClick={handleCompeteClick}>
+          <button
+            onClick={() => onSelect(selectedSongId, 'compete')}
+            className="rounded-md bg-pink-500/75 px-8 py-4 text-xl font-semibold text-white transition hover:bg-pink-500/50 active:scale-95"
+          >
             Compete
           </button>
-          <button className={buttonStyle} onClick={handleFusionClick}>
-            Fusion
-          </button>
         </div>
-
       </div>
-      
+
     </div>
   );
 }
