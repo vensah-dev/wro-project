@@ -22,6 +22,8 @@ export default function CompeteMode({ song, onExit }) {
     isPlaying, hasEnded, progress, start, handleEnded,
     isPersonVisible, expectedMove, nextMove,
     score, combo, judgement, windowResults,
+    puppetAngles, transmissionEnabled, setTransmissionEnabled,
+    serialSupported, serialStatus, serialError, connectSerial, disconnectSerial,
   } = useCompeteMode({ song, videoRef, canvasRef, guideCanvasRef, audioRef });
 
   return (
@@ -47,6 +49,19 @@ export default function CompeteMode({ song, onExit }) {
           <PersonNotVisibleBanner isPersonVisible={isPersonVisible} isPlaying={isPlaying} />
         </>
       )}
+
+      {/* <div className="absolute bottom-4 left-4 z-20">
+        <SerialControlPanel
+          isSupported={serialSupported}
+          status={serialStatus}
+          errorMessage={serialError}
+          angles={puppetAngles}
+          transmissionEnabled={transmissionEnabled}
+          onToggleTransmission={setTransmissionEnabled}
+          onConnect={connectSerial}
+          onDisconnect={disconnectSerial}
+        />
+      </div> */}
 
       <AudioMissingBanner visible={audioMissing} audioSrc={song.audioSrc} />
 

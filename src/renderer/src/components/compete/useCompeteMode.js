@@ -1,10 +1,12 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useSongPlayback } from './useSongPlayback';
 import { getActiveTimelineEntry, getNextTimelineEntry, getSongEndTime } from '../timelineUtils';
 import { getMoveById } from '../danceMoves';
 import { useCompetePosePipeline } from './useCompetePosePipeline';
 import { useCompeteScoring } from './useCompeteScoring';
+import { useCompetePuppetSync } from './useCompetePuppetSync';
 import { drawGuideSilhouette } from '../canvasDrawing';
+import { useSerialContext } from '../hooks/SerialContext';
 
 // ============================================================
 // HOOK: ties playback + pose detection + scoring together — Compete mode
@@ -29,6 +31,18 @@ export function useCompeteMode({ song, videoRef, canvasRef, guideCanvasRef, audi
     currentTime, currentEntry, confirmedMoveId, isPlaying, timeline,
   });
 
+  // ESP32 puppet: streams the current expected move's target angles over
+  // Web Serial so a physical puppet can act the moves out alongside the
+  // on-screen guide silhouette.
+  const serial = useSerialContext();
+  const [transmissionEnabled, setTransmissionEnabled] = useState(true);
+  const { angles: puppetAngles } = useCompetePuppetSync({
+    expectedMove,
+    sendLine: serial.sendLine,
+    isConnected: serial.status === 'connected',
+    transmissionEnabled,
+  });
+
   // finalize the last scoring window once the song actually ends
   useEffect(() => {
     if (hasEnded) finalizeActiveWindow();
@@ -47,5 +61,13 @@ export function useCompeteMode({ song, videoRef, canvasRef, guideCanvasRef, audi
     isPlaying, hasEnded, progress, start, handleEnded,
     isPersonVisible, expectedMove, nextMove,
     score, combo, judgement, windowResults,
+    // puppet / serial
+    puppetAngles,
+    transmissionEnabled, setTransmissionEnabled,
+    serialSupported: serial.isSupported,
+    serialStatus: serial.status,
+    serialError: serial.errorMessage,
+    connectSerial: serial.connect,
+    disconnectSerial: serial.disconnect,
   };
 }

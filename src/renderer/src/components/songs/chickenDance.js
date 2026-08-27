@@ -19,7 +19,7 @@
 //      with ids 'flap', 'tail', 'clap', 'turn' matching the moveIds
 //      used in TIMELINE below.
 
-import audioSrc from '../../assets/chicken-dance-song.mov';
+import audioSrc from '../../assets/music/chicken-dance-song.mov';
 import { DANCE_MOVES } from '../danceMoves';
 
 const TIMELINE = [

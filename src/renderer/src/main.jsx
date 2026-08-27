@@ -1,11 +1,13 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import MainMenu from './main-menu'
-import BodyDetector from './body-detector'
 import './assets/main.css'
+import { SerialProvider } from './components/hooks/SerialContext';
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <BodyDetector />
-  </StrictMode>
+  <SerialProvider>
+    <StrictMode>
+      <MainMenu />
+    </StrictMode>
+  </SerialProvider>
 )

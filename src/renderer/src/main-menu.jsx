@@ -1,45 +1,67 @@
-import React from 'react';
+import React, { useState } from 'react';
+import CompeteMode from './components/compete/CompeteMode';
+import LearnMode from './components/learn/LearnMode';
+import { getSongById } from './components/songs';
 import { SONGS } from './components/songs';
-import { useState } from 'react';
+import SelectMenu from './select-menu';
+import OptionsMenu from './options-menu';
 
-export default function MainMenu({ onSelect }) {
-  const [selectedSongId, setSelectedSongId] = useState(null);
-  return (
-    <div className="relative flex h-screen w-screen flex-col items-end justify-center gap-6 bg-gray-50">
+import indian from './assets/menu-screen-bg/pr/indian.jpg'
+import chinese from './assets/menu-screen-bg/pr/malay.jpg'
+import malay from './assets/menu-screen-bg/pr/chinese.avif'
+import idk from './assets/menu-screen-bg/pr/idk.jpg'
 
-      <ul className={`flex w-[75vw] flex-col gap-3 items-end  ${SONGS.length > 10 ? 'justify-start' : 'justify-center'} overflow-y-scroll py-8`}>
-        {SONGS.map((song) => (
-          <li
-            key={song.id}
-            className={`group relative flex items-center justify-between gap-4 overflow-hidden rounded-l-md px-3 py-6 hover:w-[75vw] transition-all duration-300 ease-in-out hover:text-white ${selectedSongId === song.id ? 'bg-pink-500/75 w-[60vw] text-white' : 'bg-pink-500/25 w-[45vw] text-white/50'}`}
-            onClick={() => setSelectedSongId(song.id)}
-          >
-            <span className="truncate text-xl font-bold">{song.title}</span>
-          </li>
-        ))}
-      </ul>
+const prListOfImages = [indian, chinese, malay, idk]
 
-      <div className="flex justify-between w-full h-shrink items-center p-8 self-end absolute bottom-0">
-        <p className="text-5xl font-bold text-black/75">
-          [INSERT GAME NAME]
-        </p>
+import ironInHim from './assets/menu-screen-bg/iron-in-him.png'
+// import chinese from './assets/menu-screen-bg/pr/malay.jpg'
+// import malay from './assets/menu-screen-bg/pr/chinese.avif'
+// import idk from './assets/menu-screen-bg/pr/idk.jpg'
 
-        <div className="flex gap-4">
-          <button
-            onClick={() => onSelect(selectedSongId, 'learn')}
-            className="rounded-md px-8 py-4 text-xl font-semibold text-black transition hover:opacity-50 active:scale-95"
-          >
-            Learn
-          </button>
-          <button
-            onClick={() => onSelect(selectedSongId, 'compete')}
-            className="rounded-md bg-pink-500/75 px-8 py-4 text-xl font-semibold text-white transition hover:bg-pink-500/50 active:scale-95"
-          >
-            Compete
-          </button>
+const listofImages = [ironInHim, ironInHim, ironInHim, ironInHim]
+
+export default function MainMenu() {
+    const [selected, setSelected] = useState(null);
+
+    const handleExit = () => {setSelected(null);};
+
+    const buttonStyle = "rounded-md max-w-xs hover:max-w-sm text-start bg-pink-500/75 px-8 py-4 text-xl font-semibold text-white hover:bg-pink-500/92 active:scale-95 transition-all duration-300 ease-in-out";
+
+    if (selected === 'play') return <SelectMenu onExit={handleExit}/>;
+    if (selected === 'options') return <OptionsMenu onExit={handleExit}/>;
+
+    return(
+    <div className="">
+        <img
+        src={listofImages[Math.floor(Math.random() * 4)]}
+        alt="bg image"
+        className='w-screen h-screen object-cover absolute -z-10'
+        
+        />
+
+        <div className="flex flex-col h-dvh w-dvw px-8 justify-center">
+            <p className="text-8xl text-white">Game Name</p>
+            <div className="flex flex-col flex-shrink gap-4 py-16 pl-12">
+                <button
+                onClick={() => setSelected("play")}
+                className={buttonStyle}
+                >
+                Play
+                </button>
+                <button
+                onClick={() => setSelected("options")}
+                className={buttonStyle}
+                >
+                Options
+                </button>
+                <button
+                onClick={() => window.api.quitApp()}
+                className={buttonStyle}
+                >
+                Quit
+                </button>
+            </div>
         </div>
-      </div>
-
     </div>
-  );
+    );
 }
