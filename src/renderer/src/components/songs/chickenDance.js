@@ -18,6 +18,12 @@
 //      Shark move (e.g. the "baby" move), and create four moves here
 //      with ids 'flap', 'tail', 'clap', 'turn' matching the moveIds
 //      used in TIMELINE below.
+//   3. Leg tracking now exists (see babyShark.js/zapin.js/etc. for the
+//      pattern): add `leftKnee`/`rightKnee` to a move's `ranges` (e.g.
+//      [160, 180] for straight legs), matching `hints`, and
+//      `leftKnee`/`rightKnee`/`leftAnkle`/`rightAnkle` points in
+//      `target`. The Chicken Dance's tail-wiggle move especially would
+//      benefit from a bent-knee criterion once you fill it in.
 
 import audioSrc from '../../assets/music/chicken-dance-song.mov';
 import { DANCE_MOVES } from '../danceMoves';

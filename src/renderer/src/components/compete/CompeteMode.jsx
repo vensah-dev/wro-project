@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import WebcamFeed from '../shared/WebcamFeed';
 import PersonNotVisibleBanner from '../shared/PersonNotVisibleBanner';
 import ProgressBar from './ProgressBar';
@@ -10,13 +10,14 @@ import StartOverlay from './StartOverlay';
 import EndScreen from './EndScreen';
 import { useCompeteMode } from './useCompeteMode';
 
-export default function CompeteMode({ song, onExit }) {
+export default function CompeteMode({ song, onExit, highScore, setHighScore }) {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const guideCanvasRef = useRef(null);
   const audioRef = useRef(null);
 
   const [audioMissing, setAudioMissing] = useState(false);
+  const [isNewHighScore, setIsNewHighScore] = useState(false);
 
   const {
     isPlaying, hasEnded, progress, start, handleEnded,
@@ -25,6 +26,30 @@ export default function CompeteMode({ song, onExit }) {
     puppetAngles, transmissionEnabled, setTransmissionEnabled,
     serialSupported, serialStatus, serialError, connectSerial, disconnectSerial,
   } = useCompeteMode({ song, videoRef, canvasRef, guideCanvasRef, audioRef });
+
+  useEffect(() => {
+    if (hasEnded) {
+      for (let i = 0; i < highScore.length; i++) {
+
+        if (score > highScore[i]) {
+          
+          setHighScore(prev => {
+            const newHighScore = [...prev];
+            newHighScore[i] = score;
+            return newHighScore;
+          });
+
+          if(i == 0) {
+            setIsNewHighScore(true);
+          }
+
+        } else {
+          setIsNewHighScore(false);
+        }
+
+      }
+    }
+  }, [hasEnded]);
 
   return (
     <div className="relative flex h-screen w-screen items-center justify-center overflow-hidden bg-gary-50">
@@ -66,7 +91,7 @@ export default function CompeteMode({ song, onExit }) {
       <AudioMissingBanner visible={audioMissing} audioSrc={song.audioSrc} />
 
       {!isPlaying && !hasEnded && <StartOverlay title={song.title} onStart={start} onBack={onExit} />}
-      {hasEnded && <EndScreen score={score} windowResults={windowResults} onRestart={start} onBack={onExit} />}
+      {hasEnded && <EndScreen score={score} windowResults={windowResults} onRestart={start} onBack={onExit} highScore={highScore} setHighScore={setHighScore} />}
     </div>
   );
 }

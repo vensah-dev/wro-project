@@ -1,11 +1,19 @@
 import { CONFIG } from './config';
 import { scoreRange } from './geometry';
 
+// Legs are tracked and drawn on the live skeleton, but intentionally
+// excluded from scoring everywhere — Compete mode's total/grade and
+// Learn mode's per-limb feedback should only ever be driven by arm
+// criteria. This is the single place that exclusion happens; nothing
+// downstream needs to know legs exist.
+const EXCLUDED_CRITERIA = new Set(['leftKnee', 'rightKnee']);
+
 export function scoreMove(move, angles, { detailed = false } = {}) {
   const perCriterion = {};
 
   if (move.ranges) {
     for (const key of Object.keys(move.ranges)) {
+      if (EXCLUDED_CRITERIA.has(key)) continue;
       const tolerance = key === 'wristGap' ? CONFIG.RATIO_TOLERANCE : CONFIG.ANGLE_TOLERANCE_DEG;
       const range = move.ranges[key];
       const score = scoreRange(angles[key], range, tolerance);

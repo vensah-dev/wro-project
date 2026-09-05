@@ -12,6 +12,12 @@ import { CRITERION_TO_LIMB } from './danceMoves';
 // Moves that only use customScore (run, safe's arm-height check) don't have
 // a clean per-criterion -> limb mapping, so they fall back to the move's
 // single genericHint instead of per-limb hints.
+//
+// Note: legs never show up in perCriterion (and therefore never in
+// limbFeedback) — scoring.js excludes leftKnee/rightKnee entirely, so
+// this file doesn't need its own leg filtering. Legs are still drawn on
+// the live skeleton (see canvasDrawing.js), just colored a fixed green
+// rather than derived from feedback.
 export function getJointFeedback(move, angles) {
   const { total, perCriterion } = scoreMove(move, angles, { detailed: true });
   const limbFeedback = {};

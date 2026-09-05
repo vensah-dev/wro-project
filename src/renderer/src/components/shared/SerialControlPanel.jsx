@@ -3,9 +3,9 @@ import { SERVO_CHANNELS } from '../puppetAngles';
 
 const STATUS_COLOR = {
   connected: '#22ff55',
-  connecting: '#ffd23f',
-  disconnected: '#888888',
-  error: '#ff3333',
+  connecting: '#ffac3f',
+  disconnected: '#d6d6d6',
+  error: '#9c33ff',
 };
 
 const STATUS_LABEL = {
@@ -29,19 +29,19 @@ export default function SerialControlPanel({
 
   return (
     <div className="z-20 flex w-full flex-col gap-2 rounded-md bg-gray-200/75 text-black p-4">
-      <div className="flex items-center justify-between gap-3">
+      <div className="flex flex-col items-start gap-3 pb-6">
         <div className="flex items-center gap-2">
           <span
-            className="h-2.5 w-2.5 rounded-full"
+            className="h-5 w-5 rounded-full items-center"
             style={{ backgroundColor: STATUS_COLOR[status] || STATUS_COLOR.disconnected }}
           />
-          <span className="text-sm font-semibold">{STATUS_LABEL[status] || status}</span>
+          <span className="text-xl font-semibold items-center pb-0.5">{STATUS_LABEL[status] || status}</span>
         </div>
 
         {isConnected ? (
           <button
             onClick={onDisconnect}
-            className="rounded bg-red-400 px-3 py-1 text-xs font-semibold hover:bg-red-400/75"
+            className="rounded-md bg-red-500 px-4 py-1 text-xs text-white hover:bg-red-700 active:scale-95 transition-all duration-300 ease-in-out"
           >
             Disconnect
           </button>
@@ -49,7 +49,7 @@ export default function SerialControlPanel({
           <button
             onClick={onConnect}
             disabled={!isSupported || isConnecting}
-            className="rounded bg-blue-400 px-3 py-1 text-xs font-semibold hover:bg-blue-400/75 disabled:opacity-50"
+            className="rounded-md bg-green-500 px-4 py-1 text-xs text-white hover:bg-green-700 active:scale-95 transition-all duration-300 ease-in-out"
           >
             Connect
           </button>
@@ -57,11 +57,11 @@ export default function SerialControlPanel({
       </div>
 
       {!isSupported && (
-        <span className="text-xs text-red-400">
+        <span className="text-xs text-red-500">
           Web Serial isn't available in this browser.
         </span>
       )}
-      {errorMessage && <span className="text-xs text-red-400">{errorMessage}</span>}
+      {errorMessage && <span className="text-xs text-red-500">{errorMessage}</span>}
 
       <label className="flex items-center gap-2 text-xs text-black">
         <input
@@ -69,6 +69,8 @@ export default function SerialControlPanel({
           checked={transmissionEnabled}
           onChange={(e) => onToggleTransmission(e.target.checked)}
           disabled={!isConnected}
+          className="w-5 h-5 appearance-none border-2 border-gray-300 rounded-full disabled:bg-gray-200 disabled:border-gray-300 checked:bg-white checked:border-pink-500/50 checked:border-7 transition-all duration-200"
+
         />
         Send live angles to puppet
       </label>

@@ -28,11 +28,14 @@ export const DANCE_MOVES = [
     id: 'baby',
     label: 'Baby Shark 🐟 (little chomp)',
     ranges: {
+      leftKnee: [160, 180], rightKnee: [160, 180],
       leftElbow: [15, 85], rightElbow: [15, 85],
       leftShoulder: [5, 55], rightShoulder: [5, 55],
       wristGap: [0, 0.75],
     },
     hints: {
+      leftKnee: { low: 'Straighten your left leg a bit', high: 'Relax your left knee slightly' },
+      rightKnee: { low: 'Straighten your right leg a bit', high: 'Relax your right knee slightly' },
       leftElbow: { low: 'Bend your left elbow a little more', high: 'Straighten your left elbow a bit' },
       rightElbow: { low: 'Bend your right elbow a little more', high: 'Straighten your right elbow a bit' },
       leftShoulder: { low: 'Lift your left arm a touch', high: 'Lower your left arm a touch' },
@@ -44,17 +47,24 @@ export const DANCE_MOVES = [
       leftElbow: { x: 0.34, y: 0.40 }, rightElbow: { x: 0.66, y: 0.40 },
       leftWrist: { x: 0.40, y: 0.36 }, rightWrist: { x: 0.60, y: 0.36 },
       leftHip: { x: 0.44, y: 0.62 }, rightHip: { x: 0.56, y: 0.62 },
+      leftKnee: { x: 0.44, y: 0.80 }, rightKnee: { x: 0.56, y: 0.80 },
+      leftAnkle: { x: 0.44, y: 0.96 }, rightAnkle: { x: 0.56, y: 0.96 },
+      leftHeel: { x: 0.42, y: 0.98 }, rightHeel: { x: 0.58, y: 0.98 },
+      leftFootIndex: { x: 0.46, y: 1.00 }, rightFootIndex: { x: 0.54, y: 1.00 },
     },
   },
   {
     id: 'mommy',
     label: 'Mommy Shark 🐬 (medium chomp)',
     ranges: {
+      leftKnee: [160, 180], rightKnee: [160, 180],
       leftElbow: [70, 135], rightElbow: [70, 135],
       leftShoulder: [45, 95], rightShoulder: [45, 95],
       wristGap: [0.6, 1.5],
     },
     hints: {
+      leftKnee: { low: 'Straighten your left leg a bit', high: 'Relax your left knee slightly' },
+      rightKnee: { low: 'Straighten your right leg a bit', high: 'Relax your right knee slightly' },
       leftElbow: { low: 'Open your left elbow up more', high: 'Bring your left elbow in a bit' },
       rightElbow: { low: 'Open your right elbow up more', high: 'Bring your right elbow in a bit' },
       leftShoulder: { low: 'Raise your left arm higher', high: 'Bring your left arm down a bit' },
@@ -66,17 +76,24 @@ export const DANCE_MOVES = [
       leftElbow: { x: 0.26, y: 0.34 }, rightElbow: { x: 0.74, y: 0.34 },
       leftWrist: { x: 0.30, y: 0.22 }, rightWrist: { x: 0.70, y: 0.22 },
       leftHip: { x: 0.44, y: 0.62 }, rightHip: { x: 0.56, y: 0.62 },
+      leftKnee: { x: 0.44, y: 0.80 }, rightKnee: { x: 0.56, y: 0.80 },
+      leftAnkle: { x: 0.44, y: 0.96 }, rightAnkle: { x: 0.56, y: 0.96 },
+      leftHeel: { x: 0.42, y: 0.98 }, rightHeel: { x: 0.58, y: 0.98 },
+      leftFootIndex: { x: 0.46, y: 1.00 }, rightFootIndex: { x: 0.54, y: 1.00 },
     },
   },
   {
     id: 'daddy',
     label: 'Daddy Shark 🦈 (big chomp)',
     ranges: {
+      leftKnee: [160, 180], rightKnee: [160, 180],
       leftElbow: [140, 180], rightElbow: [140, 180],
       leftShoulder: [70, 135], rightShoulder: [70, 135],
       wristGap: [1.3, 3.5],
     },
     hints: {
+      leftKnee: { low: 'Straighten your left leg a bit', high: 'Relax your left knee slightly' },
+      rightKnee: { low: 'Straighten your right leg a bit', high: 'Relax your right knee slightly' },
       leftElbow: { low: 'Straighten your left arm out fully', high: 'You\u2019re overextending — relax the left elbow slightly' },
       rightElbow: { low: 'Straighten your right arm out fully', high: 'You\u2019re overextending — relax the right elbow slightly' },
       leftShoulder: { low: 'Raise your left arm higher', high: 'Bring your left arm down a bit' },
@@ -88,6 +105,10 @@ export const DANCE_MOVES = [
       leftElbow: { x: 0.14, y: 0.32 }, rightElbow: { x: 0.86, y: 0.32 },
       leftWrist: { x: 0.02, y: 0.30 }, rightWrist: { x: 0.98, y: 0.30 },
       leftHip: { x: 0.44, y: 0.62 }, rightHip: { x: 0.56, y: 0.62 },
+      leftKnee: { x: 0.44, y: 0.80 }, rightKnee: { x: 0.56, y: 0.80 },
+      leftAnkle: { x: 0.44, y: 0.96 }, rightAnkle: { x: 0.56, y: 0.96 },
+      leftHeel: { x: 0.42, y: 0.98 }, rightHeel: { x: 0.58, y: 0.98 },
+      leftFootIndex: { x: 0.46, y: 1.00 }, rightFootIndex: { x: 0.54, y: 1.00 },
     },
   },
   {
@@ -110,12 +131,17 @@ export const DANCE_MOVES = [
       leftElbow: { x: 0.30, y: 0.28 }, rightElbow: { x: 0.66, y: 0.42 },
       leftWrist: { x: 0.24, y: 0.18 }, rightWrist: { x: 0.60, y: 0.50 },
       leftHip: { x: 0.44, y: 0.62 }, rightHip: { x: 0.56, y: 0.62 },
+      leftKnee: { x: 0.38, y: 0.78 }, rightKnee: { x: 0.60, y: 0.76 },
+      leftAnkle: { x: 0.40, y: 0.94 }, rightAnkle: { x: 0.54, y: 0.92 },
+      leftHeel: { x: 0.38, y: 0.97 }, rightHeel: { x: 0.52, y: 0.88 },
+      leftFootIndex: { x: 0.43, y: 0.99 }, rightFootIndex: { x: 0.57, y: 0.90 },
     },
   },
   {
     id: 'safe',
     label: "It's the End — Safe! 🙌",
     ranges: {
+      leftKnee: [160, 180], rightKnee: [160, 180],
       leftElbow: [150, 180], rightElbow: [150, 180],
       leftShoulder: [150, 180], rightShoulder: [150, 180],
     },
@@ -125,6 +151,8 @@ export const DANCE_MOVES = [
       return (leftUp + rightUp) / 2;
     },
     hints: {
+      leftKnee: { low: 'Straighten your left leg a bit', high: 'Relax your left knee slightly' },
+      rightKnee: { low: 'Straighten your right leg a bit', high: 'Relax your right knee slightly' },
       leftElbow: { low: 'Straighten your left arm all the way up', high: null },
       rightElbow: { low: 'Straighten your right arm all the way up', high: null },
       leftShoulder: { low: 'Raise your left arm straight overhead', high: null },
@@ -136,6 +164,10 @@ export const DANCE_MOVES = [
       leftElbow: { x: 0.40, y: 0.16 }, rightElbow: { x: 0.60, y: 0.16 },
       leftWrist: { x: 0.38, y: 0.02 }, rightWrist: { x: 0.62, y: 0.02 },
       leftHip: { x: 0.44, y: 0.62 }, rightHip: { x: 0.56, y: 0.62 },
+      leftKnee: { x: 0.44, y: 0.80 }, rightKnee: { x: 0.56, y: 0.80 },
+      leftAnkle: { x: 0.44, y: 0.96 }, rightAnkle: { x: 0.56, y: 0.96 },
+      leftHeel: { x: 0.42, y: 0.98 }, rightHeel: { x: 0.58, y: 0.98 },
+      leftFootIndex: { x: 0.46, y: 1.00 }, rightFootIndex: { x: 0.54, y: 1.00 },
     },
   },
 ];
@@ -157,6 +189,8 @@ export const CRITERION_TO_LIMB = {
   rightElbow: ['rightArm'],
   rightShoulder: ['rightArm'],
   wristGap: ['leftArm', 'rightArm'],
+  leftKnee: ['leftLeg'],
+  rightKnee: ['rightLeg'],
 };
 
 const TIMELINE = [

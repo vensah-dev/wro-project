@@ -92,11 +92,21 @@ export function drawLimbColoredSkeleton(ctx, landmarks, limbFeedback, width, hei
     leftArm: [['leftShoulder', 'leftElbow'], ['leftElbow', 'leftWrist']],
     rightArm: [['rightShoulder', 'rightElbow'], ['rightElbow', 'rightWrist']],
   };
+  // Legs are drawn but never scored (see scoring.js), so there's no
+  // feedback color to derive for them — always render them green rather
+  // than reading a limbFeedback entry that will never exist.
+  const legBones = [
+    ['leftHip', 'leftKnee'], ['leftKnee', 'leftAnkle'],
+    ['rightHip', 'rightKnee'], ['rightKnee', 'rightAnkle'],
+  ];
+  const LEG_COLOR = '#22ff55';
   const NAME_TO_IDX = {
     leftShoulder: LM.LEFT_SHOULDER, rightShoulder: LM.RIGHT_SHOULDER,
     leftElbow: LM.LEFT_ELBOW, rightElbow: LM.RIGHT_ELBOW,
     leftWrist: LM.LEFT_WRIST, rightWrist: LM.RIGHT_WRIST,
     leftHip: LM.LEFT_HIP, rightHip: LM.RIGHT_HIP,
+    leftKnee: LM.LEFT_KNEE, rightKnee: LM.RIGHT_KNEE,
+    leftAnkle: LM.LEFT_ANKLE, rightAnkle: LM.RIGHT_ANKLE,
   };
 
   const drawBone = (aName, bName, color) => {
@@ -117,4 +127,5 @@ export function drawLimbColoredSkeleton(ctx, landmarks, limbFeedback, width, hei
     const color = limbFeedback[limb]?.color || '#03b1fc';
     bones.forEach(([a, b]) => drawBone(a, b, color));
   }
+  legBones.forEach(([a, b]) => drawBone(a, b, LEG_COLOR));
 }
