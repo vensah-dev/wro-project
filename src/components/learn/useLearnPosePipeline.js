@@ -57,7 +57,7 @@ export function useLearnPosePipeline({ videoRef, canvasRef, expectedMove }) {
     setStreak(streakRef.current);
   }, []);
 
-  usePoseLandmarks({ videoRef, canvasRef, onFrame });
+  const { status: poseStatus, error: poseError } = usePoseLandmarks({ videoRef, canvasRef, onFrame });
 
-  return { isPersonVisible, limbFeedback, genericHint, streak };
+  return { isPersonVisible, limbFeedback, genericHint, streak, poseStatus, poseError };
 }

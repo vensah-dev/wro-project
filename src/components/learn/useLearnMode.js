@@ -13,7 +13,7 @@ export function useLearnMode({ song, videoRef, canvasRef }) {
   const [seqIndex, setSeqIndex] = useState(0);
   const expectedMove = moves[seqIndex];
 
-  const { isPersonVisible, limbFeedback, genericHint, streak } = useLearnPosePipeline({
+  const { isPersonVisible, limbFeedback, genericHint, streak, poseStatus, poseError  } = useLearnPosePipeline({
     videoRef, canvasRef, expectedMove,
   });
 
@@ -29,5 +29,6 @@ export function useLearnMode({ song, videoRef, canvasRef }) {
     expectedMove, seqIndex, total: moves.length, isFirst, isLast,
     isPersonVisible, limbFeedback, genericHint, suggestNext,
     next, prev, restart,
+    poseStatus, poseError
   };
 }
