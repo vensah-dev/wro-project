@@ -21,7 +21,7 @@ export default function SelectMenu({onExit, highScore, setHighScore}) {
   return(
     <div className="relative flex h-screen w-screen flex-col items-end justify-center gap-6 bg-gray-50">
 
-      <ul className={`flex w-[75vw] flex-col gap-3 items-end  ${SONGS.length > 10 ? 'justify-start' : 'justify-center'} overflow-y-scroll py-8`}>
+      <ul className={`flex w-[80vw] flex-col gap-3 items-end  ${SONGS.length > 10 ? 'justify-start' : 'justify-center'} overflow-y-scroll py-8`}>
         {SONGS.map((song) => (
           <li
             key={song.id}
