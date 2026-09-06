@@ -117,7 +117,7 @@ export function useCompetePosePipeline({ videoRef, canvasRef, expectedMoveId, mo
     drawSkeleton(canvasCtx, canvasElement, landmarks, lineColor);
   }, []);
 
-  usePoseLandmarks({ videoRef, canvasRef, onFrame });
+  const { status: poseStatus, error: poseError } = usePoseLandmarks({ videoRef, canvasRef, onFrame });
 
-  return { confirmedMoveId, isPersonVisible };
+  return { confirmedMoveId, isPersonVisible, poseStatus, poseError };
 }

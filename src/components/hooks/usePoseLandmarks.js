@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 // ============================================================
 // Runtime script loader for MediaPipe's CDN builds
@@ -128,20 +128,24 @@ export function preloadPoseModel() {
 // any changing values via refs) so the camera/pose instance isn't torn
 // down and rebuilt every render.
 
+
 export function usePoseLandmarks({ videoRef, canvasRef, onFrame }) {
+  const [status, setStatus] = useState('loading'); // 'loading' | 'ready' | 'error'
+  const [error, setError] = useState(null);
+
   useEffect(() => {
     let cancelled = false;
     let pose = null;
     let camera = null;
+
+    setStatus('loading');
+    setError(null);
 
     const videoElement = videoRef.current;
     const canvasElement = canvasRef.current;
     const canvasCtx = canvasElement.getContext('2d');
 
     pose = new window.Pose({
-      // Pin an exact version. "latest" (no version in the URL) can drift
-      // out of sync between pose.js and camera_utils.js independently,
-      // which is a separate known source of this same kind of error.
       locateFile: (file) =>
         `https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5.1675469404/${file}`,
     });
@@ -154,13 +158,13 @@ export function usePoseLandmarks({ videoRef, canvasRef, onFrame }) {
       minTrackingConfidence: 0.72,
     });
     pose.onResults((results) => {
-      if (cancelled) return; // don't touch canvas after unmount
+      if (cancelled) return;
       onFrame(results.poseLandmarks || null, canvasCtx, canvasElement);
     });
 
     camera = new window.Camera(videoElement, {
       onFrame: async () => {
-        if (cancelled) return; // stop feeding a dead pose instance
+        if (cancelled) return;
         await pose.send({ image: videoElement });
       },
       width: videoElement.clientWidth || videoElement.videoWidth || 640,
@@ -168,14 +172,19 @@ export function usePoseLandmarks({ videoRef, canvasRef, onFrame }) {
     });
 
     camera.start()
-      .then(() => { if (!cancelled) console.log('Pipeline successfully active!'); })
-      .catch((err) => console.error('Webcam startup error: ', err));
+      .then(() => { if (!cancelled) setStatus('ready'); })
+      .catch((err) => {
+        console.error('Webcam/MediaPipe startup error: ', err);
+        if (!cancelled) { setStatus('error'); setError(err); }
+      });
 
     return () => {
       cancelled = true;
       if (camera) camera.stop();
-      if (pose) pose.close(); // actually release this instance's resources
+      if (pose) pose.close();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [videoRef, canvasRef]);
+
+  return { status, error };
 }

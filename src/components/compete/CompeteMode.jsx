@@ -23,6 +23,7 @@ export default function CompeteMode({ song, onExit, highScore, setHighScore }) {
     isPlaying, hasEnded, progress, start, handleEnded,
     isPersonVisible, expectedMove, nextMove,
     score, combo, judgement, windowResults,
+    poseStatus, poseError,
     puppetAngles, transmissionEnabled, setTransmissionEnabled,
     serialSupported, serialStatus, serialError, connectSerial, disconnectSerial,
   } = useCompeteMode({ song, videoRef, canvasRef, guideCanvasRef, audioRef });
@@ -54,6 +55,29 @@ export default function CompeteMode({ song, onExit, highScore, setHighScore }) {
   return (
     <div className="relative flex h-screen w-screen items-center justify-center overflow-hidden bg-gary-50">
       <WebcamFeed videoRef={videoRef} canvasRef={canvasRef} />
+
+      {poseStatus === 'loading' && (
+        <div className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-4 bg-black/80 text-white">
+          <div className="h-12 w-12 animate-spin rounded-full border-4 border-pink-500 border-t-transparent" />
+          <p className="text-xl">Getting the camera ready…</p>
+        </div>
+      )}
+
+      {poseStatus === 'error' && (
+        <div className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-4 bg-black/90 px-8 text-center text-white">
+          <p className="text-xl text-pink-500">Couldn't start the camera</p>
+          <p className="text-sm text-white/70">
+            Check that camera permission is granted and no ad blocker is
+            interfering, then try again.
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className="rounded-md bg-pink-500/75 px-6 py-2 transition-all hover:bg-pink-500/92"
+          >
+            Retry
+          </button>
+        </div>
+      )}
 
       <audio
         ref={audioRef}

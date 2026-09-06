@@ -25,7 +25,7 @@ export function useCompeteMode({ song, videoRef, canvasRef, guideCanvasRef, audi
   const expectedMove = getMoveById(moves, expectedMoveId);
   const nextMove = getMoveById(moves, isPlaying ? getNextTimelineEntry(timeline, currentTime)?.moveId : null);
 
-  const { confirmedMoveId, isPersonVisible } = useCompetePosePipeline({
+  const { confirmedMoveId, isPersonVisible, poseStatus, poseError } = useCompetePosePipeline({
     videoRef, canvasRef, expectedMoveId, moves,
   });
   
@@ -72,6 +72,7 @@ export function useCompeteMode({ song, videoRef, canvasRef, guideCanvasRef, audi
     isPlaying, hasEnded, progress, start, handleEnded,
     isPersonVisible, expectedMove, nextMove,
     score, combo, judgement, windowResults,
+    poseStatus, poseError,
     // puppet / serial
     puppetAngles,
     transmissionEnabled, setTransmissionEnabled,
