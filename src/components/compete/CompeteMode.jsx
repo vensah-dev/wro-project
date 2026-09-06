@@ -94,7 +94,7 @@ export default function CompeteMode({ song, onExit, highScore, setHighScore }) {
           <div className="h-dvh aspect-[9/16]">
               <NextMovePanel guideCanvasRef={guideCanvasRef} expectedMove={expectedMove} nextMove={nextMove} />
           </div>
-          <JudgementPopup judgement={judgement} />
+          <JudgementPopup judgement={judgement} transmissionEnabled={transmissionEnabled} />
           <PersonNotVisibleBanner isPersonVisible={isPersonVisible} isPlaying={isPlaying} />
         </>
       )}

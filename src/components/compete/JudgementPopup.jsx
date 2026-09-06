@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { CONFIG } from '../config';
+import { useSerialContext } from '../hooks/SerialContext';
+
 
 const CONFETTI_COLORS = ['#facc15', '#4ade80', '#38bdf8', '#f472b6', '#fb923c', '#a78bfa'];
 
@@ -37,8 +39,9 @@ const VIGNETTE_COLOR = {
   bad: 'rgba(248, 113, 113, 0.45)', // red
 };
 
-export default function JudgementPopup({ judgement }) {
+export default function JudgementPopup({ judgement, transmissionEnabled }) {
   const [visible, setVisible] = useState(false);
+  const serial = useSerialContext();
 
   useEffect(() => {
     if (!judgement) return;
@@ -47,9 +50,19 @@ export default function JudgementPopup({ judgement }) {
     return () => clearTimeout(timer);
   }, [judgement]);
 
+
+
   const isPerfect = judgement?.text === 'Perfect!';
   const isGood = judgement?.text === 'Good';
   const isBad = judgement && !isPerfect && !isGood;
+
+  useEffect(() => {
+    if (!transmissionEnabled || !serial.status === 'connected') return;
+    if (!visible) serial.sendLine("idle lights\n");
+    else if (isPerfect ) serial.sendLine("0,255,0,0,23\n");
+    else if (isGood) serial.sendLine("255,255,0,0,23\n");
+    else if (isBad) serial.sendLine("255,0,0,0,23\n");
+  }, [visible, isPerfect, isGood, isBad, serial.sendLine, serial.status, transmissionEnabled]);
 
   const confetti = useMemo(() => {
     if (!judgement) return [];
