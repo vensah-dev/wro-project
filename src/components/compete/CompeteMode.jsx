@@ -57,14 +57,14 @@ export default function CompeteMode({ song, onExit, highScore, setHighScore }) {
       <WebcamFeed videoRef={videoRef} canvasRef={canvasRef} />
 
       {poseStatus === 'loading' && (
-        <div className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-4 bg-black/80 text-white">
+        <div className="absolute inset-0 z-50 flex flex-col items-center justify-center gap-4 bg-black/80 text-white">
           <div className="h-12 w-12 animate-spin rounded-full border-4 border-pink-500 border-t-transparent" />
           <p className="text-xl">Getting the camera ready…</p>
         </div>
       )}
 
       {poseStatus === 'error' && (
-        <div className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-4 bg-black/90 px-8 text-center text-white">
+        <div className="absolute inset-0 z-50 flex flex-col items-center justify-center gap-4 bg-black/90 px-8 text-center text-white">
           <p className="text-xl text-pink-500">Couldn't start the camera</p>
           <p className="text-sm text-white/70">
             Check that camera permission is granted and no ad blocker is
