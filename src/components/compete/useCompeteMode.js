@@ -17,7 +17,8 @@ export function useCompeteMode({ song, videoRef, canvasRef, guideCanvasRef, audi
   const { timeline, moves } = song;
   const songEndTime = getSongEndTime(timeline);
 
-  const { currentTime, isPlaying, hasEnded, play, handleEnded } = useSongPlayback(audioRef);
+  // Added `stop` to the destructured functions
+  const { currentTime, isPlaying, hasEnded, play, handleEnded, stop } = useSongPlayback(audioRef);
 
   const currentEntry = isPlaying ? getActiveTimelineEntry(timeline, currentTime) : null;
   const expectedMoveId = currentEntry ? currentEntry.moveId : null;
@@ -27,7 +28,9 @@ export function useCompeteMode({ song, videoRef, canvasRef, guideCanvasRef, audi
   const { confirmedMoveId, isPersonVisible } = useCompetePosePipeline({
     videoRef, canvasRef, expectedMoveId, moves,
   });
-  const { score, combo, judgement, windowResults, reset, finalizeActiveWindow } = useCompeteScoring({
+  
+  // Added `allMovesCompleted` to the destructured state
+  const { score, combo, judgement, windowResults, reset, finalizeActiveWindow, allMovesCompleted } = useCompeteScoring({
     currentTime, currentEntry, confirmedMoveId, isPlaying, timeline,
   });
 
@@ -43,7 +46,15 @@ export function useCompeteMode({ song, videoRef, canvasRef, guideCanvasRef, audi
     transmissionEnabled,
   });
 
-  // finalize the last scoring window once the song actually ends
+  // NEW: Watch for when all timeline moves have a result, and cut the music instantly
+  useEffect(() => {
+    if (allMovesCompleted && isPlaying) {
+      stop();
+    }
+  }, [allMovesCompleted, isPlaying, stop]);
+
+  // finalize the last scoring window once the song actually ends (fallback logic
+  // just in case the song ends before the timeline is fully populated)
   useEffect(() => {
     if (hasEnded) finalizeActiveWindow();
   }, [hasEnded, finalizeActiveWindow]);

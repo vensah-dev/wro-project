@@ -36,5 +36,15 @@ export function useSongPlayback(audioRef) {
     setHasEnded(true);
   }, []);
 
-  return { currentTime, isPlaying, hasEnded, play, handleEnded };
+  // NEW: Instantly kill playback and flag the song as ended
+  const stop = useCallback(() => {
+    const audio = audioRef.current;
+    if (audio) {
+      audio.pause();
+    }
+    setIsPlaying(false);
+    setHasEnded(true);
+  }, [audioRef]);
+
+  return { currentTime, isPlaying, hasEnded, play, handleEnded, stop };
 }

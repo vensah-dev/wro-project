@@ -31,6 +31,7 @@ function makeFallingConfetti(count) {
 export default function EndScreen({ score, windowResults, onRestart, onBack, highScore, setHighScore }) {
   const { grade, avgAccuracy } = calculateGrade(windowResults);
   const [assignedName, setAssignedName] = useState(null);
+  const [isNewHighScore, setIsNewHighScore] = useState(false);
   const [showConfetti, setShowConfetti] = useState(true);
   const hasSavedRef = useRef(false);
 
@@ -41,34 +42,35 @@ export default function EndScreen({ score, windowResults, onRestart, onBack, hig
     return () => clearTimeout(timer);
   }, []);
 
-  // Safely find current top score
-  const currentTopScore = Array.isArray(highScore)
-    ? (highScore.length > 0 ? Math.max(...highScore.map((item) => item.score)) : 0)
-    : (highScore || 0);
-
-  const isNewHighScore = score > currentTopScore;
-
+  // Save every completed run — not just new high scores — under a random name.
   useEffect(() => {
-    if (isNewHighScore && !hasSavedRef.current) {
-      hasSavedRef.current = true; // Prevent duplicate saves
+    if (hasSavedRef.current) return;
+    hasSavedRef.current = true; // Prevent duplicate saves
 
-      const list = Array.isArray(highScore) ? highScore : [];
-      const takenNames = new Set(list.map((entry) => entry.name));
-      const available = NAME_POOL.filter((name) => !takenNames.has(name));
+    const list = Array.isArray(highScore) ? highScore : [];
 
-      // Select random available name or fallback to a numbered tag
-      const chosenName = available.length > 0
-        ? available[Math.floor(Math.random() * available.length)]
-        : `Dancer #${Math.floor(1000 + Math.random() * 9000)}`;
+    // Determine "new high score" status up front, before we add this entry.
+    const currentTopScore = list.length > 0 ? Math.max(...list.map((item) => item.score)) : 0;
+    setIsNewHighScore(score > currentTopScore);
 
-      setAssignedName(chosenName);
+    const takenNames = new Set(list.map((entry) => entry.name));
+    const available = NAME_POOL.filter((name) => !takenNames.has(name));
 
-      const newEntry = { name: chosenName, score };
-      const updatedHighScores = [...list, newEntry].sort((a, b) => b.score - a.score);
-      
-      setHighScore(updatedHighScores);
-    }
-  }, [isNewHighScore, score, highScore, setHighScore]);
+    // Select random available name or fallback to a numbered tag
+    const chosenName = available.length > 0
+      ? available[Math.floor(Math.random() * available.length)]
+      : `Dancer #${Math.floor(1000 + Math.random() * 9000)}`;
+
+    setAssignedName(chosenName);
+
+    const newEntry = { name: chosenName, score };
+    const updatedHighScores = [...list, newEntry].sort((a, b) => b.score - a.score);
+
+    setHighScore(updatedHighScores);
+    // Intentionally run once on mount only — highScore/setHighScore are stable
+    // enough for this purpose and we don't want re-saves on every re-render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="absolute inset-0 z-40 flex flex-col items-center justify-center gap-3 bg-black/80 overflow-hidden">
@@ -139,10 +141,12 @@ export default function EndScreen({ score, windowResults, onRestart, onBack, hig
 
       {assignedName && (
         <div className="mt-2 flex flex-col items-center gap-1">
-          <div className="text-lg font-bold text-pink-500">New High Score!</div>
-            <div className="text-sm font-semibold text-white">
-              Saved automatically as <span className="text-green-400 font-black">{assignedName}</span>
-            </div>
+          {isNewHighScore && (
+            <div className="text-lg font-bold text-pink-500">New High Score!</div>
+          )}
+          <div className="text-sm font-semibold text-white">
+            Saved automatically as <span className="text-green-400 font-black">{assignedName}</span>
+          </div>
         </div>
       )}
 

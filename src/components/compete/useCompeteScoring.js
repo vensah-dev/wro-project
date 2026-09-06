@@ -72,5 +72,8 @@ export function useCompeteScoring({ currentTime, currentEntry, confirmedMoveId, 
     setWindowResults([]);
   }, []);
 
-  return { score, combo, judgement, windowResults, reset, finalizeActiveWindow };
+  // NEW: Check if every move in the timeline has been fully judged
+  const allMovesCompleted = timeline.length > 0 && windowResults.length === timeline.length;
+
+  return { score, combo, judgement, windowResults, reset, finalizeActiveWindow, allMovesCompleted };
 }

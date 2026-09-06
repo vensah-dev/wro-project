@@ -46,7 +46,7 @@ function loadScriptOnce(src) {
   });
 }
 
-function loadMediapipe() {
+export function loadMediapipe() {
   if (!mediapipeLoadPromise) {
     mediapipeLoadPromise = Promise.all([
       loadScriptOnce(
@@ -77,6 +77,44 @@ function loadMediapipe() {
   return mediapipeLoadPromise;
 }
 
+// A pre-warmed Pose instance, created ahead of time so its constructor,
+// WASM binary, and model files are already fetched/parsed by the time
+// the user actually enters Compete/Learn mode. `initialize()` is what
+// triggers the wasm/model network fetch — merely constructing a Pose
+// object does not.
+let poseWarmupPromise = null;
+let warmedPoseInstance = null;
+
+export function preloadPoseModel() {
+  if (!poseWarmupPromise) {
+    poseWarmupPromise = loadMediapipe().then(() => {
+      const pose = new window.Pose({
+        locateFile: (file) =>
+          `https://cdn.jsdelivr.net/npm/@mediapipe/pose@${POSE_VERSION}/${file}`,
+      });
+      // Options must match what usePoseLandmarks sets below, since some
+      // of them (modelComplexity in particular) affect which model file
+      // gets fetched — mismatched options would mean the warm-up fetched
+      // the wrong asset and the real hook has to fetch again anyway.
+      pose.setOptions({
+        modelComplexity: 1,
+        smoothLandmarks: true,
+        enableSegmentation: false,
+        smoothSegmentation: false,
+        minDetectionConfidence: 0.77,
+        minTrackingConfidence: 0.72,
+      });
+      return pose.initialize().then(() => {
+        warmedPoseInstance = pose;
+      });
+    });
+    poseWarmupPromise.catch(() => {
+      poseWarmupPromise = null;
+    });
+  }
+  return poseWarmupPromise;
+}
+
 // ============================================================
 // HOOK: mode-agnostic MediaPipe pipeline
 // ============================================================
@@ -89,67 +127,54 @@ function loadMediapipe() {
 // `onFrame` should be memoized with useCallback([]) by the caller (reading
 // any changing values via refs) so the camera/pose instance isn't torn
 // down and rebuilt every render.
+
 export function usePoseLandmarks({ videoRef, canvasRef, onFrame }) {
   useEffect(() => {
     let cancelled = false;
     let pose = null;
     let camera = null;
 
-    loadMediapipe()
-      .then(() => {
-        if (cancelled) return;
+    const videoElement = videoRef.current;
+    const canvasElement = canvasRef.current;
+    const canvasCtx = canvasElement.getContext('2d');
 
-        const videoElement = videoRef.current;
-        const canvasElement = canvasRef.current;
-        const canvasCtx = canvasElement.getContext('2d');
+    pose = new window.Pose({
+      // Pin an exact version. "latest" (no version in the URL) can drift
+      // out of sync between pose.js and camera_utils.js independently,
+      // which is a separate known source of this same kind of error.
+      locateFile: (file) =>
+        `https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5.1675469404/${file}`,
+    });
+    pose.setOptions({
+      modelComplexity: 1,
+      smoothLandmarks: true,
+      enableSegmentation: false,
+      smoothSegmentation: false,
+      minDetectionConfidence: 0.77,
+      minTrackingConfidence: 0.72,
+    });
+    pose.onResults((results) => {
+      if (cancelled) return; // don't touch canvas after unmount
+      onFrame(results.poseLandmarks || null, canvasCtx, canvasElement);
+    });
 
-        pose = new window.Pose({
-          // Must stay in sync with POSE_VERSION above — mixing versions
-          // between the JS constructor and the wasm/model assets it
-          // fetches is a common source of silent failures.
-          locateFile: (file) =>
-            `https://cdn.jsdelivr.net/npm/@mediapipe/pose@${POSE_VERSION}/${file}`,
-        });
-        pose.setOptions({
-          modelComplexity: 1,
-          smoothLandmarks: true,
-          enableSegmentation: false,
-          smoothSegmentation: false,
-          minDetectionConfidence: 0.77,
-          minTrackingConfidence: 0.72,
-        });
-        pose.onResults((results) => {
-          if (cancelled) return;
-          onFrame(results.poseLandmarks || null, canvasCtx, canvasElement);
-        });
+    camera = new window.Camera(videoElement, {
+      onFrame: async () => {
+        if (cancelled) return; // stop feeding a dead pose instance
+        await pose.send({ image: videoElement });
+      },
+      width: videoElement.clientWidth || videoElement.videoWidth || 640,
+      height: videoElement.clientHeight || videoElement.videoHeight || 480,
+    });
 
-        camera = new window.Camera(videoElement, {
-          onFrame: async () => {
-            if (cancelled) return;
-            await pose.send({ image: videoElement });
-          },
-          // Use the video element's own render size instead of the full
-          // screen resolution, so we're not asking MediaPipe to process a
-          // 4K/5K frame on a high-res monitor when the visible video is
-          // much smaller.
-          width: videoElement.clientWidth || videoElement.videoWidth || 640,
-          height: videoElement.clientHeight || videoElement.videoHeight || 480,
-        });
-
-        return camera.start();
-      })
-      .then(() => {
-        if (!cancelled) console.log('Pipeline successfully active!');
-      })
-      .catch((err) => console.error('Webcam/MediaPipe startup error: ', err));
+    camera.start()
+      .then(() => { if (!cancelled) console.log('Pipeline successfully active!'); })
+      .catch((err) => console.error('Webcam startup error: ', err));
 
     return () => {
       cancelled = true;
       if (camera) camera.stop();
-      // Release the WASM/model resources. Without this, remounts
-      // (React StrictMode double-invoke in dev, hot reload, mode
-      // switches) can leak Pose instances.
-      if (pose) pose.close();
+      if (pose) pose.close(); // actually release this instance's resources
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [videoRef, canvasRef]);

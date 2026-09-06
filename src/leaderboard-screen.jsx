@@ -3,9 +3,24 @@ import SerialControlPanel from './components/shared/SerialControlPanel';
 import { useState } from 'react';
 import { useSerialContext } from './components/hooks/SerialContext';
 
-export default function HighScoreScreen({ onExit, highScores }) {
+export default function LeaderboardScreen({ onExit }) {
   const serial = useSerialContext();
-  const [transmissionEnabled, setTransmissionEnabled] = useState(true);
+
+    const [highScores, setHighScores] = useState(() => {
+        const saved = localStorage.getItem('highscore');
+        if (saved) {
+            try {
+                return JSON.parse(saved);
+            } catch (error) {
+                console.error('Failed to parse highscore:', error);
+            }
+        }
+        return [
+            { name: 'Venkatesh', score: 70 },
+            { name: 'Vincent', score: 40 },
+            { name: 'Yu Fei', score: -20 },
+        ];
+    });
 
   return (
     <div className="relative flex h-screen w-full px-16 flex-col items-center justify-center gap-6 bg-gray-50">
@@ -50,7 +65,7 @@ export default function HighScoreScreen({ onExit, highScores }) {
           Menu
         </div>
 
-        <p className="text-3xl font-semibold text-black/75">High Scores</p>
+        <p className="text-3xl font-semibold text-black/75">Leaderboard</p>
       </div>
 
     </div>

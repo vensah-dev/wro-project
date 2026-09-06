@@ -57,7 +57,7 @@
 // poses), `hints` / `genericHint` for Learn mode, and a `target`
 // skeleton for overlay.
 
-import audioSrc from '../../assets/music/zapin-song.mp3';
+import audioSrc from '../../assets/music/zapin-song.mov';
 import { scoreRange } from '../geometry';
 import { CONFIG } from '../config';
 

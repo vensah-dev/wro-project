@@ -304,19 +304,17 @@ export const CRITERION_TO_LIMB = {
 
 // ~90 seconds total, with breathing room between poses for transitions.
 const TIMELINE = [
-  { id: 'shan-bang-1', moveId: 'shan-bang', start: 2, end: 7 },
-  { id: 'an-zhang-1', moveId: 'an-zhang', start: 9, end: 14 },
-  { id: 'tuo-zhang-1', moveId: 'tuo-zhang', start: 16, end: 22 },
-  { id: 'shun-feng-qi-right-1', moveId: 'shun-feng-qi-right', start: 24, end: 29 },
-  { id: 'shun-feng-qi-left-1', moveId: 'shun-feng-qi-left', start: 29, end: 34 },
-  { id: 'yun-shou-1', moveId: 'yun-shou', start: 36, end: 41 },
-  { id: 'yun-shou-2', moveId: 'yun-shou', start: 41, end: 46 },
-  { id: 'chong-zhang-right-1', moveId: 'chong-zhang-right', start: 48, end: 53 },
-  { id: 'chong-zhang-left-1', moveId: 'chong-zhang-left', start: 53, end: 58 },
-  { id: 'shun-feng-qi-right-2', moveId: 'shun-feng-qi-right', start: 60, end: 66 },
-  { id: 'shun-feng-qi-left-2', moveId: 'shun-feng-qi-left', start: 66, end: 72 },
-  { id: 'tuo-zhang-2', moveId: 'tuo-zhang', start: 74, end: 80 },
-  { id: 'shan-bang-2', moveId: 'shan-bang', start: 82, end: 90 },
+  { id: 'shan-bang-1', moveId: 'shan-bang', start: 2, end: 4 },
+  { id: 'an-zhang-1', moveId: 'an-zhang', start: 4, end: 6 },
+  { id: 'tuo-zhang-1', moveId: 'tuo-zhang', start: 6, end: 8 },
+  { id: 'shun-feng-qi-right-1', moveId: 'shun-feng-qi-right', start: 8, end: 10 },
+  { id: 'shun-feng-qi-left-1', moveId: 'shun-feng-qi-left', start: 10, end: 12 },
+  { id: 'yun-shou-1', moveId: 'yun-shou', start: 12, end: 14 },
+  { id: 'yun-shou-2', moveId: 'yun-shou', start: 14, end: 16 },
+  { id: 'chong-zhang-right-1', moveId: 'chong-zhang-right', start: 16, end: 18 },
+  { id: 'chong-zhang-left-1', moveId: 'chong-zhang-left', start: 18, end: 20 },
+  { id: 'tuo-zhang-2', moveId: 'tuo-zhang', start: 20, end: 22 },
+  { id: 'shan-bang-2', moveId: 'shan-bang', start: 22, end: 24 },
 ];
 
 export default {

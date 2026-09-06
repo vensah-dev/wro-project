@@ -5,7 +5,7 @@ import { getSongById } from './components/songs';
 import { SONGS } from './components/songs';
 import SelectMenu from './select-menu';
 import OptionsMenu from './options-menu';
-import HighScoreScreen from './highscore-screen';
+import LeaderboardScreen from './leaderboard-screen';
 
 import indian from './assets/menu-screen-bg/pr/indian.jpg';
 import chinese from './assets/menu-screen-bg/pr/malay.jpg';
@@ -14,10 +14,18 @@ import idk from './assets/menu-screen-bg/pr/idk.jpg';
 
 import ironInHim from './assets/menu-screen-bg/iron-in-him.png';
 
+import { preloadPoseModel } from './components/hooks/usePoseLandmarks';
+
 const prListOfImages = [indian, chinese, malay, idk];
 const listofImages = [ironInHim, ironInHim, ironInHim, ironInHim];
 
 export default function MainMenu() {
+    //Pre laoding
+    useEffect(() => {
+    preloadPoseModel().catch(() => {});
+    }, []);
+
+    //Some variables and PR mode and images and shit
     const [prMode, setPrMode] = useState(true);
     const [selected, setSelected] = useState(null);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -34,8 +42,7 @@ export default function MainMenu() {
 
     const handleExit = () => { setSelected(null); };
 
-    const buttonStyle = "rounded-md max-w-xs hover:max-w-sm text-start bg-pink-500/75 px-8 py-4 text-xl font-semibold text-white hover:bg-pink-500/92 active:scale-95 transition-all duration-300 ease-in-out";
-
+    //high score stuff
     const [highScore, setHighScore] = useState(() => {
         const saved = localStorage.getItem('highscore');
         if (saved) {
@@ -56,9 +63,12 @@ export default function MainMenu() {
         localStorage.setItem('highscore', JSON.stringify(highScore));
     }, [highScore]);
 
+    //button tailwind styels
+    const buttonStyle = "rounded-md max-w-xs hover:max-w-sm text-start bg-pink-500/75 px-8 py-4 text-xl font-semibold text-white hover:bg-pink-500/92 active:scale-95 transition-all duration-300 ease-in-out";
+
     if (selected === 'play') return <SelectMenu onExit={handleExit} highScore={highScore} setHighScore={setHighScore}/>;
     if (selected === 'options') return <OptionsMenu onExit={handleExit} prMode={prMode} setPrMode={setPrMode}/>;
-    if (selected === 'highscore') return <HighScoreScreen onExit={handleExit} highScores={highScore} />;
+    if (selected === 'highscore') return <LeaderboardScreen onExit={handleExit} />;
 
     return (
         <div className="relative overflow-hidden w-screen h-screen">
@@ -86,7 +96,7 @@ export default function MainMenu() {
                         Options
                     </button>
                     <button onClick={() => setSelected("highscore")} className={buttonStyle}>
-                        High Score
+                        Leaderboard
                     </button>
                 </div>
             </div>
