@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import CompeteMode from './components/compete/CompeteMode';
-import LearnMode from './components/learn/LearnMode';
-import { getSongById } from './components/songs';
-import { SONGS } from './components/songs';
+import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import SelectMenu from './select-menu';
 import OptionsMenu from './options-menu';
 import LeaderboardScreen from './leaderboard-screen';
@@ -102,4 +99,19 @@ export default function MainMenu() {
             </div>
         </div>
     );
+}
+
+export function SubMenuFooter({menuName, onExit}) {
+  return (
+      <div className="z-60 flex justify-between w-full items-center bottom-0 px-16 py-8 bg-gray-50 sticky">
+        <div onClick={onExit} className='relative text-2xl font-semibold text-pink-500/75 hover:text-pink-500/50 w-min active:gap-2 gap-0 flex items-center justify-between transition-all duration-150 ease-in-out'>
+          <div className='relative h-14 aspect-square '>
+            <MdOutlineKeyboardArrowLeft className='h-full w-full top-0.5 absolute'/>
+          </div>
+          Menu
+        </div>
+
+        <p className="text-3xl font-semibold text-black/75">{menuName}</p>
+      </div>
+  );
 }
