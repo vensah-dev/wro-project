@@ -9,12 +9,9 @@ import chinese from './assets/menu-screen-bg/pr/malay.jpg';
 import malay from './assets/menu-screen-bg/pr/chinese.avif';
 import idk from './assets/menu-screen-bg/pr/idk.jpg';
 
-import ironInHim from './assets/menu-screen-bg/iron-in-him.png';
-
 import { preloadPoseModel } from './components/hooks/usePoseLandmarks';
 
 const prListOfImages = [indian, chinese, malay, idk];
-const listofImages = [ironInHim, ironInHim, ironInHim, ironInHim];
 
 export default function MainMenu() {
     //Pre laoding
@@ -27,15 +24,13 @@ export default function MainMenu() {
     const [selected, setSelected] = useState(null);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-    const activeImages = prMode ? prListOfImages : listofImages;
-
     useEffect(() => {
         const interval = setInterval(() => {
-            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % activeImages.length);
+            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % prListOfImages.length);
         }, 4000); // Changes image every 4 seconds
 
         return () => clearInterval(interval);
-    }, [activeImages.length]);
+    }, [prListOfImages.length]);
 
     const handleExit = () => { setSelected(null); };
 
@@ -70,7 +65,7 @@ export default function MainMenu() {
     return (
         <div className="relative overflow-hidden w-screen h-screen">
             {/* Render all images and transition their opacity */}
-            {activeImages.map((imgSrc, index) => (
+            {prListOfImages.map((imgSrc, index) => (
                 <img
                     key={index}
                     src={imgSrc}

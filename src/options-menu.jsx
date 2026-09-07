@@ -11,8 +11,20 @@ export default function OptionsMenu({onExit, prMode, setPrMode}) {
   const serial = useSerialContext();
   const [transmissionEnabled, setTransmissionEnabled] = useState(true);
 
+  function resetLeaderboard() {
+    const isConfirmed = window.confirm("Are you sure you want to reset the leaderboard?");
+    if (isConfirmed) {
+      localStorage.removeItem("highscore");
+      setHighScore([
+          { name: 'Venkatesh', score: 70 },
+          { name: 'Vincent', score: 40 },
+          { name: 'Yu Fei', score: -20 },
+      ]);
+    }
+  }
+
   return(
-    <div className="relative flex h-max w-full px-16 flex-col items-center justify-center gap-6 bg-gray-50 pt-24">
+    <div className="relative flex h-screen w-full px-16 flex-col items-center justify-center gap-6 bg-gray-50 mt-24">
 
       <SerialControlPanel
         isSupported={serial.isSupported}
@@ -24,42 +36,16 @@ export default function OptionsMenu({onExit, prMode, setPrMode}) {
         onDisconnect={serial.disconnect}
       />
 
-      <label className="z-20 flex w-full flex-col gap-2 rounded-md bg-gray-200/75 text-black p-4">
-        <div className="flex items-center justify-between gap-3">
-
-          <div className="flex items-center gap-2 text-xs text-black">
-            <input
-              type="checkbox"
-              checked={prMode}
-              onChange={(e) => setPrMode(e.target.checked)}
-              className="w-5 h-5 appearance-none border-2 border-gray-300 rounded-full checked:bg-white checked:border-pink-500/50 checked:border-7 transition-all duration-200"
-            />
-            PR Mode
-          </div>
-
-        </div>
-      </label>
-
       <PuppetSettings serial={serial} transmissionEnabled={transmissionEnabled}/>
 
-      <div className="z-20 flex w-full flex-col gap-2 rounded-md bg-gray-200/75 text-black p-4">
+      <div className="z-20 flex w-full flex-col gap-2 rounded-md bg-gray-200/75 text-black p-4 place-self-end">
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center justify-between gap-2 text-xs text-black w-full">
 
             <span>Reset Leaderboard</span>
 
             <button
-              onClick={() => {
-                const isConfirmed = window.confirm("Are you sure you want to reset the leaderboard?");
-                if (isConfirmed) {
-                  localStorage.removeItem("highscore");
-                  setHighScore([
-                      { name: 'Venkatesh', score: 70 },
-                      { name: 'Vincent', score: 40 },
-                      { name: 'Yu Fei', score: -20 },
-                  ]);
-                }
-              }}
+              onClick={resetLeaderboard}
               className="rounded-md bg-red-500 px-4 py-1 text-xs text-white hover:bg-red-700 active:scale-95 transition-all duration-300 ease-in-out"
             >
               Reset
@@ -68,6 +54,9 @@ export default function OptionsMenu({onExit, prMode, setPrMode}) {
           </div>
         </div>
       </div>
+
+      {/* spacer */}
+      <div className="z-20 flex w-full h-full flex-col gap-2 rounded-md place-self-end"/>
 
       <SubMenuFooter menuName="Options" onExit={onExit} />
 
