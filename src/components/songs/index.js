@@ -12,8 +12,10 @@ import bharatanatyam from './bharatanatyam';
 import chineseFanDance from './chineseFanDance';
 import zapin from './zapin';
 import singaporeLionDance from './singaporeLionDance';
+import everythingIAm from './everything-i-am.js';
+import tomorrowsHereToday from './tomorrows-here-today.js';
 
-export const SONGS = [bharatanatyam, chineseFanDance, zapin, singaporeLionDance];
+export const SONGS = [tomorrowsHereToday, everythingIAm, singaporeLionDance, chineseFanDance, bharatanatyam, zapin];
 export function getSongById(id) {
   return SONGS.find((song) => song.id === id) || null;
 }

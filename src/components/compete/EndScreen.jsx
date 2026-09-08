@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { calculateGrade } from '../scoring';
+import { calculateAccuracy } from '../scoring';
 
 const NAME_POOL = [
   'GrooveMaster', 'PixelDancer', 'RhythmKing', 'DiscoQueen', 
@@ -29,7 +29,7 @@ function makeFallingConfetti(count) {
 }
 
 export default function EndScreen({ score, windowResults, onRestart, onBack, highScore, setHighScore }) {
-  const { grade, avgAccuracy } = calculateGrade(windowResults);
+  const { grade, avgAccuracy } = calculateAccuracy(windowResults, score);
   const [assignedName, setAssignedName] = useState(null);
   const [isNewHighScore, setIsNewHighScore] = useState(false);
   const [showConfetti, setShowConfetti] = useState(true);
@@ -135,7 +135,7 @@ export default function EndScreen({ score, windowResults, onRestart, onBack, hig
       )}
 
       <h2 className="text-2xl font-bold text-gray-300">Dance Complete!</h2>
-      <div className="text-6xl font-extrabold text-pink-400">{grade}</div>
+      <div className="text-6xl font-extrabold text-pink-400 text-center">{grade}</div>
       <div className="text-xl font-bold text-white">{score} points</div>
       <div className="text-sm text-gray-400">{Math.round(avgAccuracy * 100)}% average accuracy</div>
 

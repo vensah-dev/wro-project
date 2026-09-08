@@ -43,12 +43,25 @@ export function matchBestMove(moves, angles) {
   return bestScore >= CONFIG.DETECTION_CONFIDENCE ? best : null;
 }
 
-export function calculateGrade(windowResults) {
+export function calculateAccuracy(windowResults, score) {
   if (windowResults.length === 0) return { grade: '\u2014', avgAccuracy: 0 };
   const avg = windowResults.reduce((s, w) => s + w.accuracy, 0) / windowResults.length;
-  let grade = 'C';
-  if (avg >= 0.9) grade = 'S';
-  else if (avg >= 0.75) grade = 'A';
-  else if (avg >= 0.5) grade = 'B';
+  let grade = grade(score);
+
   return { grade, avgAccuracy: avg };
+}
+
+export function grade(score){
+  let grade = 'U';
+  if (score >= 1200) grade = 'Touch Grass PLS';
+  else if (score >= 1000) grade = 'SSS';
+  else if (score >= 900) grade = 'SS';
+  else if (score >= 800) grade = 'S';
+  else if (score >= 700) grade = 'A';
+  else if (score >= 500) grade = 'B';
+  else if (score >= 400) grade = 'C';
+  else if (score >= 300) grade = 'E';
+  else if (score < 6) grade = 'BRO THATS LOWER THAN WHAT I GOT FOR PHYSICS!';
+
+  return grade;
 }
