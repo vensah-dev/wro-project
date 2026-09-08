@@ -9,8 +9,11 @@ import AudioMissingBanner from './AudioMissingBanner';
 import StartOverlay from './StartOverlay';
 import EndScreen from './EndScreen';
 import { useCompeteMode } from './useCompeteMode';
+import { useSerialContext } from '../hooks/SerialContext';
 
 export default function CompeteMode({ song, onExit, highScore, setHighScore }) {
+  const serial = useSerialContext();
+
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const guideCanvasRef = useRef(null);
@@ -91,9 +94,11 @@ export default function CompeteMode({ song, onExit, highScore, setHighScore }) {
         <>
           <ProgressBar progress={progress} />
           <ScoreHud score={score} combo={combo} />
-          <div className="h-dvh aspect-[9/16]">
+          {serial.status != 'connected' && (
+            <div className="h-dvh aspect-[9/16]">
               <NextMovePanel guideCanvasRef={guideCanvasRef} expectedMove={expectedMove} nextMove={nextMove} />
-          </div>
+            </div>
+          )}
           <JudgementPopup judgement={judgement} transmissionEnabled={transmissionEnabled} />
           <PersonNotVisibleBanner isPersonVisible={isPersonVisible} isPlaying={isPlaying} />
         </>
