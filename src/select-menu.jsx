@@ -7,7 +7,7 @@ import { SONGS } from './components/songs';
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 
 
-export default function SelectMenu({onExit, highScore, setHighScore}) {
+export default function SelectMenu({onExit, highScore, setHighScore, cameraRotation}) {
 
   const [selectedSong, setSelectedSong] = useState(SONGS[0].id);
   const [selectedMode, setSelectedMode] = useState(null);
@@ -16,7 +16,7 @@ export default function SelectMenu({onExit, highScore, setHighScore}) {
   var song = selectedSong ? getSongById(selectedSong) : null;
 
   if (selectedMode === 'learn' && song) return <LearnMode song={getSongById(selectedSong)} onExit={handleExit}/>;
-  if (selectedMode === 'compete' && song) return <CompeteMode song={getSongById(selectedSong)} onExit={handleExit} highScore={highScore} setHighScore={setHighScore} />;
+  if (selectedMode === 'compete' && song) return <CompeteMode song={getSongById(selectedSong)} onExit={handleExit} highScore={highScore} setHighScore={setHighScore} cameraRotation={cameraRotation} />;
 
   return(
     <div className="relative flex h-screen w-screen flex-col items-end justify-center gap-6 bg-gray-50">

@@ -5,20 +5,6 @@
 // licensed instrumental at src/renderer/src/assets/chinese-fan-dance-song.mp3
 // (or point audioSrc at wherever you host it) before running this song.
 //
-// WHAT TO LOOK FOR: fan dance (扇子舞) is one of the most visible
-// Chinese folk/classical dance forms in Singapore — performed by
-// community dance troupes and CCs (community centres) at Chinese New
-// Year events and the annual Chingay Parade, and taught by groups like
-// the People's Association's Chinese dance sections. A well-known
-// reference piece in this style is 扇舞丹青 ("Fan Dance: Ink and Wash"),
-// set to the classical guqin piece 高山流水 ("High Mountain, Flowing
-// Water") — useful as a mood reference (flowing, painterly, unhurried),
-// not something to copy move-for-move. Good search terms: "guqin/
-// guzheng/erhu instrumental," "Mo Li Hua (茉莉花) instrumental," or
-// generically "Chinese classical fan dance music." Look for something
-// flowing and moderate-tempo (~70-95 bpm feel) — the vocabulary below
-// is about sustained, arced lines, not sharp hits.
-//
 // RESEARCH NOTE — this file uses real classical Chinese dance hand/arm
 // vocabulary (基本手位), not generic "arms up / arms out" shapes:
 //   - 山膀 (shan bang, "mountain shoulder"): arm rotated into a long,

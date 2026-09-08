@@ -11,7 +11,7 @@ import EndScreen from './EndScreen';
 import { useCompeteMode } from './useCompeteMode';
 import { useSerialContext } from '../hooks/SerialContext';
 
-export default function CompeteMode({ song, onExit, highScore, setHighScore }) {
+export default function CompeteMode({ song, onExit, highScore, setHighScore, cameraRotation }) {
   const serial = useSerialContext();
 
   const videoRef = useRef(null);
@@ -20,7 +20,6 @@ export default function CompeteMode({ song, onExit, highScore, setHighScore }) {
   const audioRef = useRef(null);
 
   const [audioMissing, setAudioMissing] = useState(false);
-  const [isNewHighScore, setIsNewHighScore] = useState(false);
 
   const {
     isPlaying, hasEnded, progress, start, handleEnded,
@@ -31,33 +30,9 @@ export default function CompeteMode({ song, onExit, highScore, setHighScore }) {
     serialSupported, serialStatus, serialError, connectSerial, disconnectSerial,
   } = useCompeteMode({ song, videoRef, canvasRef, guideCanvasRef, audioRef });
 
-  useEffect(() => {
-    if (hasEnded) {
-      for (let i = 0; i < highScore.length; i++) {
-
-        if (score > highScore[i]) {
-          
-          setHighScore(prev => {
-            const newHighScore = [...prev];
-            newHighScore[i] = score;
-            return newHighScore;
-          });
-
-          if(i == 0) {
-            setIsNewHighScore(true);
-          }
-
-        } else {
-          setIsNewHighScore(false);
-        }
-
-      }
-    }
-  }, [hasEnded]);
-
   return (
     <div className="relative flex h-screen w-screen items-center justify-center overflow-hidden bg-gary-50">
-      <WebcamFeed videoRef={videoRef} canvasRef={canvasRef} />
+      <WebcamFeed videoRef={videoRef} canvasRef={canvasRef} cameraRotation={cameraRotation} />
 
       {poseStatus === 'loading' && (
         <div className="absolute inset-0 z-50 flex flex-col items-center justify-center gap-4 bg-black/80 text-white">

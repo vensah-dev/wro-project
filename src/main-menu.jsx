@@ -55,11 +55,27 @@ export default function MainMenu() {
         localStorage.setItem('highscore', JSON.stringify(highScore));
     }, [highScore]);
 
+    const [cameraRotation, setCameraRotation] = useState(() => {
+        const saved = localStorage.getItem('cameraRotation');
+        if (saved) {
+            try {
+                return JSON.parse(saved);
+            } catch (error) {
+                console.error('Failed to parse cameraRotation:', error);
+            }
+        }
+        return 0;
+    });
+    useEffect(() => {
+        localStorage.setItem('cameraRotation', JSON.stringify(cameraRotation));
+    }, [cameraRotation]);
+
+
     //button tailwind styels
     const buttonStyle = "rounded-md max-w-xs hover:max-w-sm text-start bg-pink-500/75 px-8 py-4 text-xl font-semibold text-white hover:bg-pink-500/92 active:scale-95 transition-all duration-300 ease-in-out";
 
-    if (selected === 'play') return <SelectMenu onExit={handleExit} highScore={highScore} setHighScore={setHighScore}/>;
-    if (selected === 'options') return <OptionsMenu onExit={handleExit} prMode={prMode} setPrMode={setPrMode}/>;
+    if (selected === 'play') return <SelectMenu onExit={handleExit} highScore={highScore} setHighScore={setHighScore} cameraRotation={cameraRotation} setCameraRotation={setCameraRotation} />;
+    if (selected === 'options') return <OptionsMenu onExit={handleExit} prMode={prMode} setPrMode={setPrMode} cameraRotation={cameraRotation} setCameraRotation={setCameraRotation} />;
     if (selected === 'highscore') return <LeaderboardScreen onExit={handleExit} />;
 
     return (
@@ -79,7 +95,14 @@ export default function MainMenu() {
             <div className="absolute inset-0 bg-linear-to-r from-black to-transparent -z-5"/>
 
             <div className="flex flex-col h-dvh w-dvw px-20 justify-center">
-                <p className="text-8xl text-pink-500">Dance <p className="text-5xl inline -translate-x-2">for</p> <p className="text-white">Singapore</p></p>
+
+                <div className="flex flex-col text-8xl">
+                    <div className="flex text-pink-500 gap-4 items-end">
+                        Dance <span className="text-5xl">for</span>
+                    </div>
+                    <span className="text-white">Singapore</span>
+                </div>
+
                 <div className="flex flex-col gap-4 py-16">
                     <button onClick={() => setSelected("play")} className={buttonStyle}>
                         Play

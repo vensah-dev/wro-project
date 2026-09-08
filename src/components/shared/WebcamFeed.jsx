@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react';  
 
-export default function WebcamFeed({ videoRef, canvasRef }) {
+export default function WebcamFeed({ videoRef, canvasRef, cameraRotation }) {
   return (
-    <div className="relative h-full w-full">
+<div className="relative h-full w-full" style={{ transform: `rotate(${cameraRotation || 0}deg)` }}>
       <video
         ref={videoRef}
         autoPlay

@@ -12,7 +12,7 @@ import bharatanatyam from './bharatanatyam';
 import chineseFanDance from './chineseFanDance';
 import zapin from './zapin';
 
-export const SONGS = [bharatanatyam, chineseFanDance, zapin, babyShark, chickenDance];
+export const SONGS = [bharatanatyam, chineseFanDance, zapin];
 export function getSongById(id) {
   return SONGS.find((song) => song.id === id) || null;
 }

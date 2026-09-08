@@ -5,16 +5,6 @@
 // licensed instrumental at src/renderer/src/assets/bharatanatyam-thillana-song.mp3
 // (or point audioSrc at wherever you host it) before running this song.
 //
-// WHAT TO LOOK FOR: a "thillana" — the fast, largely instrumental,
-// rhythm-driven closing piece of a traditional Bharatanatyam repertoire
-// (margam), carried by nattuvangam (spoken rhythmic syllables) and
-// mridangam percussion. Bharatanatyam is the classical dance form most
-// visibly taught and performed within Singapore's Indian (predominantly
-// Tamil) community — at Deepavali/Thaipusam cultural segments, and by
-// schools like Apsaras Arts or Nrityalaya Aesthetics Society. Search
-// terms: "Carnatic thillana instrumental," "Bharatanatyam adavu
-// practice music," tempo brisk (~80-110 bpm feel).
-//
 // RESEARCH NOTE — this file is built from real, named Bharatanatyam
 // vocabulary (adavus and hastas, as catalogued in the Abhinaya Darpana
 // and taught in every beginner syllabus), not generic "arms open/arms
@@ -371,20 +361,20 @@ export const CRITERION_TO_LIMB = {
 
 // ~90 seconds total, with breathing room between poses for transitions.
 const TIMELINE = [
-  { id: 'anjali-1', moveId: 'anjali-hasta', start: 2, end: 6 },
-  { id: 'tattadavu-1', moveId: 'tattadavu', start: 8, end: 14 },
-  { id: 'nattadavu-kanan-1', moveId: 'nattadavu-kanan', start: 16, end: 20 },
-  { id: 'nattadavu-kiri-1', moveId: 'nattadavu-kiri', start: 20, end: 24 },
-  { id: 'visharu-kanan-1', moveId: 'visharu-adavu-kanan', start: 26, end: 31 },
-  { id: 'visharu-kiri-1', moveId: 'visharu-adavu-kiri', start: 31, end: 36 },
-  { id: 'swastika-1', moveId: 'swastika-hasta', start: 38, end: 43 },
-  { id: 'dola-1', moveId: 'dola-hasta', start: 45, end: 49 },
-  { id: 'alapadma-1', moveId: 'alapadma', start: 51, end: 57 },
-  { id: 'alapadma-2', moveId: 'alapadma', start: 57, end: 63 },
-  { id: 'nattadavu-kanan-2', moveId: 'nattadavu-kanan', start: 65, end: 69 },
-  { id: 'nattadavu-kiri-2', moveId: 'nattadavu-kiri', start: 69, end: 73 },
-  { id: 'anjali-2', moveId: 'anjali-hasta', start: 75, end: 79 },
-  { id: 'mayura-1', moveId: 'mayura-chari', start: 81, end: 90 },
+  { id: 'anjali-1', moveId: 'anjali-hasta', start: 2, end: 4 },
+  { id: 'tattadavu-1', moveId: 'tattadavu', start: 4, end: 6 },
+  { id: 'nattadavu-kanan-1', moveId: 'nattadavu-kanan', start: 6, end: 8 },
+  { id: 'nattadavu-kiri-1', moveId: 'nattadavu-kiri', start: 8, end: 10 },
+  { id: 'visharu-kanan-1', moveId: 'visharu-adavu-kanan', start: 10, end: 12 },
+  { id: 'visharu-kiri-1', moveId: 'visharu-adavu-kiri', start: 12, end: 14 },
+  { id: 'swastika-1', moveId: 'swastika-hasta', start: 14, end: 16 },
+  { id: 'dola-1', moveId: 'dola-hasta', start: 16, end: 18 },
+  { id: 'alapadma-1', moveId: 'alapadma', start: 18, end: 20 },
+  { id: 'alapadma-2', moveId: 'alapadma', start: 20, end: 22 },
+  { id: 'nattadavu-kanan-2', moveId: 'nattadavu-kanan', start: 22, end: 24 },
+  { id: 'nattadavu-kiri-2', moveId: 'nattadavu-kiri', start: 24, end: 26 },
+  { id: 'anjali-2', moveId: 'anjali-hasta', start: 26, end: 28 },
+  { id: 'mayura-1', moveId: 'mayura-chari', start: 28, end: 30 },
 ];
 
 export default {

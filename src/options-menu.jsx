@@ -7,7 +7,7 @@ import {SubMenuFooter} from './main-menu';
 
 const NEUTRAL_ANGLE_DEG = 90;
 
-export default function OptionsMenu({onExit, prMode, setPrMode}) {
+export default function OptionsMenu({onExit, prMode, setPrMode, cameraRotation, setCameraRotation}) {
   const serial = useSerialContext();
   const [transmissionEnabled, setTransmissionEnabled] = useState(true);
 
@@ -24,7 +24,7 @@ export default function OptionsMenu({onExit, prMode, setPrMode}) {
   }
 
   return(
-    <div className="relative flex h-screen w-full px-16 flex-col items-center justify-center gap-6 bg-gray-50 mt-24">
+    <div className="relative flex h-screen w-full px-16 flex-col items-center justify-center gap-6 bg-gray-50 pt-24">
 
       <SerialControlPanel
         isSupported={serial.isSupported}
@@ -51,6 +51,29 @@ export default function OptionsMenu({onExit, prMode, setPrMode}) {
               Reset
             </button>
 
+          </div>
+        </div>
+      </div>
+
+      <div className="z-20 flex w-full flex-col gap-2 rounded-md bg-gray-200/75 text-black p-4 place-self-end">
+        <div className="gap-x-6 gap-y-3">
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center justify-between text-xs text-black">
+              <span>Camera Rotation</span>
+              <span className="tabular-nums text-black/60">{cameraRotation}&deg;</span>
+            </div>
+            <input
+              type="range"
+              min={-360}
+              max={360}
+              defaultValue={0}
+              step="10"
+              value={cameraRotation}
+              onChange={(e) => setCameraRotation(Number(e.target.value))}
+              onMouseUp={(e) => setCameraRotation(Number(e.target.value))}
+              onTouchEnd={(e) => setCameraRotation(Number(e.target.value))}
+              className="w-full accent-pink-500 disabled:opacity-40"
+            />
           </div>
         </div>
       </div>

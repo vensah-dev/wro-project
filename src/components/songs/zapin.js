@@ -5,18 +5,6 @@
 // licensed instrumental at src/renderer/src/assets/zapin-song.mp3 (or
 // point audioSrc at wherever you host it) before running this song.
 //
-// WHAT TO LOOK FOR: Zapin is the classical Malay dance most visibly
-// taught and performed in Singapore's Malay community — at Hari Raya
-// celebrations, weddings (adat perkahwinan), and by groups like Sri
-// Warisan Som Said Performing Arts. Its name comes from Arabic "zaffan"
-// (dancer) / zafn (fast footwork), brought by Yemeni-Arab traders to
-// the Malay world around the 14th century — which is why the core
-// ensemble is gambus (an oud-like lute) and marwas (small hand drums),
-// usually a lilting 6/8 feel. Good search terms: "Zapin instrumental,"
-// "gambus marwas music," "Zapin Melayu Riau rhythm." Look for something
-// moderate-to-brisk (~90-110 bpm feel) and lilting, not sharply
-// percussive.
-//
 // RESEARCH NOTE — this file uses real named Zapin movement vocabulary
 // (ragam), not generic "sway left / sway right" shapes:
 //   - sembah (tamu): the opening salutation to the audience/guests,
@@ -57,7 +45,7 @@
 // poses), `hints` / `genericHint` for Learn mode, and a `target`
 // skeleton for overlay.
 
-import audioSrc from '../../assets/music/zapin-song.mov';
+import audioSrc from '../../assets/music/zapin-song.mp3';
 import { scoreRange } from '../geometry';
 import { CONFIG } from '../config';
 
@@ -314,19 +302,19 @@ export const CRITERION_TO_LIMB = {
 
 // ~90 seconds total, with breathing room between poses for transitions.
 const TIMELINE = [
-  { id: 'sembah-1', moveId: 'sembah-tamu', start: 2, end: 6 },
-  { id: 'melenggang-kanan-1', moveId: 'melenggang-kanan', start: 8, end: 13 },
-  { id: 'melenggang-kiri-1', moveId: 'melenggang-kiri', start: 13, end: 18 },
-  { id: 'melenggang-kanan-2', moveId: 'melenggang-kanan', start: 18, end: 23 },
-  { id: 'ragam-tepuk-1', moveId: 'ragam-tepuk', start: 25, end: 30 },
-  { id: 'ragam-unta-1', moveId: 'ragam-unta', start: 32, end: 38 },
-  { id: 'ragam-mencedok-1', moveId: 'ragam-mencedok', start: 40, end: 46 },
-  { id: 'ragam-berkayuh-1', moveId: 'ragam-berkayuh', start: 46, end: 52 },
-  { id: 'melenggang-kiri-2', moveId: 'melenggang-kiri', start: 54, end: 59 },
-  { id: 'ragam-tepuk-2', moveId: 'ragam-tepuk', start: 61, end: 66 },
-  { id: 'ragam-unta-2', moveId: 'ragam-unta', start: 68, end: 74 },
-  { id: 'sembah-2', moveId: 'sembah-tamu', start: 76, end: 82 },
-  { id: 'wainab-1', moveId: 'wainab', start: 84, end: 90 },
+  { id: 'sembah-1', moveId: 'sembah-tamu', start: 2, end: 4 },
+  { id: 'melenggang-kanan-1', moveId: 'melenggang-kanan', start: 4, end: 6 },
+  { id: 'melenggang-kiri-1', moveId: 'melenggang-kiri', start: 6, end: 8 },
+  { id: 'melenggang-kanan-2', moveId: 'melenggang-kanan', start: 8, end: 10 },
+  { id: 'ragam-tepuk-1', moveId: 'ragam-tepuk', start: 10, end: 12 },
+  { id: 'ragam-unta-1', moveId: 'ragam-unta', start: 12, end: 14 },
+  { id: 'ragam-mencedok-1', moveId: 'ragam-mencedok', start: 14, end: 16 },
+  { id: 'ragam-berkayuh-1', moveId: 'ragam-berkayuh', start: 16, end: 18 },
+  { id: 'melenggang-kiri-2', moveId: 'melenggang-kiri', start: 18, end: 20 },
+  { id: 'ragam-tepuk-2', moveId: 'ragam-tepuk', start: 20, end: 22 },
+  { id: 'ragam-unta-2', moveId: 'ragam-unta', start: 22, end: 24 },
+  { id: 'sembah-2', moveId: 'sembah-tamu', start: 24, end: 26 },
+  { id: 'wainab-1', moveId: 'wainab', start: 26, end: 28 },
 ];
 
 export default {
