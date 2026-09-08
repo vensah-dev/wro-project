@@ -87,6 +87,8 @@ export default function LeaderboardScreen({ onExit }) {
         )}
       </div>
 
+      <div className="z-20 flex w-full h-full flex-col gap-2 rounded-md place-self-end"/>
+
       {/* Bottom Navigation */}
       <SubMenuFooter menuName="Leaderboard" onExit={onExit} />
 
