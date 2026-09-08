@@ -305,7 +305,7 @@ const TIMELINE = [
 
 export default {
   id: 'chinese-fan-dance',
-  title: 'Chinese Fan Dance',
+  title: '扇子舞 — Shan Zi Wu',
   audioSrc,
   timeline: TIMELINE,
   moves: DANCE_MOVES,

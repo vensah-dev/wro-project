@@ -11,8 +11,9 @@ import chickenDance from './chickenDance';
 import bharatanatyam from './bharatanatyam';
 import chineseFanDance from './chineseFanDance';
 import zapin from './zapin';
+import singaporeLionDance from './singaporeLionDance';
 
-export const SONGS = [bharatanatyam, chineseFanDance, zapin];
+export const SONGS = [bharatanatyam, chineseFanDance, zapin, singaporeLionDance];
 export function getSongById(id) {
   return SONGS.find((song) => song.id === id) || null;
 }

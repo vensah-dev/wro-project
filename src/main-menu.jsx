@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { preloadPoseModel } from './components/hooks/usePoseLandmarks';
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import SelectMenu from './select-menu';
 import OptionsMenu from './options-menu';
 import LeaderboardScreen from './leaderboard-screen';
 
-import indian from './assets/menu-screen-bg/pr/indian.jpg';
-import chinese from './assets/menu-screen-bg/pr/malay.jpg';
-import malay from './assets/menu-screen-bg/pr/chinese.avif';
-import idk from './assets/menu-screen-bg/pr/idk.jpg';
-
-import { preloadPoseModel } from './components/hooks/usePoseLandmarks';
+import indian from './assets/menu-screen-bg/indian.jpg';
+import chinese from './assets/menu-screen-bg/malay.jpg';
+import malay from './assets/menu-screen-bg/chinese.avif';
+import idk from './assets/menu-screen-bg/idk.jpg';
 
 const prListOfImages = [indian, chinese, malay, idk];
 

@@ -379,7 +379,7 @@ const TIMELINE = [
 
 export default {
   id: 'bharatanatyam-thillana',
-  title: 'Bharatanatyam Thillana',
+  title: 'பரதநாட்டியம்: தில்லானா — Bharatanatyam: Thillana',
   audioSrc,
   timeline: TIMELINE,
   moves: DANCE_MOVES,
