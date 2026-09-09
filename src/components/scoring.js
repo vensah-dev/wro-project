@@ -46,12 +46,12 @@ export function matchBestMove(moves, angles) {
 export function calculateAccuracy(windowResults, score) {
   if (windowResults.length === 0) return { grade: '\u2014', avgAccuracy: 0 };
   const avg = windowResults.reduce((s, w) => s + w.accuracy, 0) / windowResults.length;
-  let grade = grade(score);
+  let grade = calculateGrade(score);
 
   return { grade, avgAccuracy: avg };
 }
 
-export function grade(score){
+export function calculateGrade(score){
   let grade = 'U';
   if (score >= 1200) grade = 'Touch Grass PLS';
   else if (score >= 1000) grade = 'SSS';

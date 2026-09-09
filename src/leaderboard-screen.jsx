@@ -3,7 +3,7 @@ import SerialControlPanel from './components/shared/SerialControlPanel';
 import { useState } from 'react';
 import { useSerialContext } from './components/hooks/SerialContext';
 import {SubMenuFooter} from './main-menu';
-import { grade } from "./components/scoring";
+import { calculateGrade } from "./components/scoring";
 
 export default function LeaderboardScreen({ onExit }) {
   const serial = useSerialContext();
@@ -76,8 +76,8 @@ export default function LeaderboardScreen({ onExit }) {
                     {entry.score.toLocaleString()} pts
                   </div>
 
-                  <div className={`w-19 h-19 p-4 rounded-sm items-center justify-center flex ${grade(entry.score).length <= 1 ? "bg-pink-500" : gradeColors.find((x) => x.grade === grade(entry.score)).colour }`}>
-                    <div className="text-2xl text-center text-white font-extrabold ">{grade(entry.score).length <= 3 ? grade(entry.score) : entry.score < 6 ? "P" : "W"}</div>
+                  <div className={`w-19 h-19 p-4 rounded-sm items-center justify-center flex ${calculateGrade(entry.score).length <= 1 ? "bg-pink-500" : gradeColors.find((x) => x.grade === calculateGrade(entry.score)).colour }`}>
+                    <div className="text-2xl text-center text-white font-extrabold ">{calculateGrade(entry.score).length <= 3 ? calculateGrade(entry.score) : entry.score < 6 ? "P" : "W"}</div>
                   </div>
 
                 </div>
