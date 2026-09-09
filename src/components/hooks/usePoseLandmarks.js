@@ -167,8 +167,8 @@ export function usePoseLandmarks({ videoRef, canvasRef, onFrame }) {
         if (cancelled) return;
         await pose.send({ image: videoElement });
       },
-      width: videoElement.clientWidth || videoElement.videoWidth || 640,
-      height: videoElement.clientHeight || videoElement.videoHeight || 480,
+      width: videoElement.clientWidth || videoElement.videoWidth || 1920,
+      height: videoElement.clientHeight || videoElement.videoHeight || 1440,
     });
 
     camera.start()

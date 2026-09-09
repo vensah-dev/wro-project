@@ -52,7 +52,7 @@ export function drawGhostOverlay(ctx, width, height, targetMove) {
   ctx.globalAlpha = CONFIG.GHOST_OPACITY;
   ctx.strokeStyle = '#ffffff';
   ctx.setLineDash([10, 8]);
-  ctx.lineWidth = 5;
+  ctx.lineWidth = 10;
   ctx.lineCap = 'round';
 
   SILHOUETTE_BONES.forEach(([a, b]) => {
@@ -114,7 +114,7 @@ export function drawLimbColoredSkeleton(ctx, landmarks, limbFeedback, width, hei
     const b = landmarks[NAME_TO_IDX[bName]];
     if (!a || !b) return;
     ctx.strokeStyle = color;
-    ctx.lineWidth = 6;
+    ctx.lineWidth = 10;
     ctx.lineCap = 'round';
     ctx.beginPath();
     ctx.moveTo(a.x * width, a.y * height);

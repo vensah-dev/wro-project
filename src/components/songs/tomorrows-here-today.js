@@ -2,24 +2,14 @@ import audioSrc from '../../assets/music/tomorrows-here-today.mp3';
 import { scoreRange } from '../geometry';
 import { CONFIG } from '../config';
 
-// NOTE: getMoveById and CRITERION_TO_LIMB are generic (not tied to any one
-// song) and already live in the Baby Shark song file / a shared module.
-// No need to redefine them here — Learn/Compete should keep importing
-// those from wherever they're already exported and just pass this file's
-// `moves` array in.
-
 export const DANCE_MOVES = [
   {
     id: 'salute',
     label: 'Salute 🫡 (salute with one hand on your hip)',
+    funFact: "The salute pays tribute to Singapore's National Servicemen and defense forces, who form the backbone of the National Day Parade's iconic marching contingents.",
     ranges: {
-      // Right arm: the salute itself.
       rightElbow: [30, 75],
       rightShoulder: [70, 110],
-      // Left arm: hand on hip — deliberately NOT "arm hanging straight
-      // down," since that's indistinguishable from just standing at rest
-      // and was letting people "pass" this move without doing anything
-      // with their left arm at all.
       leftElbow: [70, 130],
       leftShoulder: [10, 50],
     },
@@ -43,12 +33,8 @@ export const DANCE_MOVES = [
   {
     id: 'wave',
     label: 'Wave the Flag 🎉 (hands up by your ears)',
+    funFact: "A true NDP staple! During the parade finale, the entire stadium transforms into a sea of red and white as thousands of spectators wave their flags in unison.",
     ranges: {
-      // Smaller/more-bent elbow range than before, and the elbow target
-      // point is now pushed out to the side (off the straight
-      // shoulder-to-wrist line) so the angle it produces is an actual,
-      // physically achievable bend rather than a near-straight arm mislabeled
-      // as "bent."
       leftElbow: [80, 130], rightElbow: [80, 130],
       leftShoulder: [140, 175], rightShoulder: [140, 175],
       wristGap: [0.3, 1.0],
@@ -74,6 +60,7 @@ export const DANCE_MOVES = [
   {
     id: 'swing',
     label: 'Power Swing 💪 (arms swing opposite, legs straight)',
+    funFact: "The song 'Tomorrow's Here Today' is all about looking forward. This dynamic marching move represents Singaporeans stepping confidently together into the future.",
     customScore: (a) => {
       const shoulderAsym = Math.abs(a.leftShoulder - a.rightShoulder);
       const elbowsStraightish = (
@@ -100,6 +87,7 @@ export const DANCE_MOVES = [
   {
     id: 'push',
     label: 'Side Extend 👐 (arms stretched straight out to sides)',
+    funFact: "Extending your arms outward symbolizes inclusivity and togetherness, reflecting the timeless national ethos of 'One People, One Nation, One Singapore.'",
     ranges: {
       leftKnee: [160, 180], rightKnee: [160, 180],
       leftElbow: [150, 180], rightElbow: [150, 180],
@@ -129,6 +117,7 @@ export const DANCE_MOVES = [
   {
     id: 'star',
     label: 'Star Reach ⭐ (big V, feet apart, legs straight)',
+    funFact: "This big finish mirrors the five stars on the Singapore National Flag, which stand for the nation's ideals of democracy, peace, progress, justice, and equality.",
     ranges: {
       leftElbow: [160, 180], rightElbow: [160, 180],
       leftShoulder: [150, 180], rightShoulder: [150, 180],
@@ -155,8 +144,6 @@ export const DANCE_MOVES = [
   },
 ];
 
-// Cycles salute -> wave -> swing -> push -> star, repeating; each hop moves
-// to a different move so no two consecutive segments are the same.
 const TIMELINE = [
   { id: 'salute-1', moveId: 'salute', start: 0, end: 2.5 },
   { id: 'wave-1', moveId: 'wave', start: 2.5, end: 5 },

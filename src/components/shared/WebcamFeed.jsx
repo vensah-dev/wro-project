@@ -1,4 +1,7 @@
-import React from 'react';  
+import React from 'react';
+const viewWidth = window.innerWidth
+const viewHeight = window.innerHeight
+
 
 export default function WebcamFeed({ videoRef, canvasRef, cameraRotation }) {
   return (
@@ -11,8 +14,8 @@ export default function WebcamFeed({ videoRef, canvasRef, cameraRotation }) {
       />
       <canvas
         ref={canvasRef}
-        width="640"
-        height="480"
+        width={viewWidth}
+        height={viewHeight}
         className="pointer-events-none absolute inset-0 z-10 h-full w-full -scale-x-100 rounded-lg"
       />
     </div>

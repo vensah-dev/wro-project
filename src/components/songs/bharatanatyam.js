@@ -1,64 +1,19 @@
 // ============================================================
 // SONG: Bharatanatyam Thillana
 // ============================================================
-// This is a placeholder — no actual track ships with this file. Drop a
-// licensed instrumental at src/renderer/src/assets/bharatanatyam-thillana-song.mp3
-// (or point audioSrc at wherever you host it) before running this song.
-//
-// RESEARCH NOTE — this file is built from real, named Bharatanatyam
-// vocabulary (adavus and hastas, as catalogued in the Abhinaya Darpana
-// and taught in every beginner syllabus), not generic "arms open/arms
-// up" shapes:
-//   - anjali hasta: palms together at the chest — the namaskaram that
-//     opens (and closes) a Bharatanatyam class or performance.
-//   - tattadavu ("tap step"): the very first adavu a student learns —
-//     arms held out on a soft downward diagonal from the shoulders
-//     (pataka hasta) while the feet tap in rhythm.
-//   - nattadavu ("rooting step"): the heel is used as a pivot; as each
-//     heel strikes out, the same-side arm extends out at waist height
-//     while the hand rotates (tripataka), the other arm staying folded
-//     in — genuinely asymmetric, tied to which foot is working.
-//   - visharu adavu: a traveling, diagonal adavu — one arm sweeps up
-//     high while the other sweeps low, combined with alapadma/
-//     katakamukha hastas, covering ground on a diagonal path.
-//   - swastika hasta: both forearms cross over each other in front of
-//     the chest — a documented samyukta (double-hand) hasta, and a
-//     genuinely distinct silhouette from every open/extended pose here.
-//   - dola hasta ("swing hand"): arms hang low and slightly forward
-//     with a soft elbow bend, hastas pointing down — the relaxed,
-//     "at rest between phrases" position.
-//   - alapadma ("blooming lotus"): both hands raised and opened above
-//     the head like an unfurling flower.
-//   - mayura ("peacock") finale: one arm curves in front of the head
-//     like a peacock's crest/neck while the other extends out to the
-//     side — evoking the mayura hasta's namesake bird for a closing
-//     flourish.
-// What real Bharatanatyam can't hand off to 2D shoulder/elbow tracking
-// is the finger-level detail that actually defines most of these
-// hastas (which fingers bend, how far, palm orientation) and the
-// footwork/aramandi (half-seated stance) that adavus are built on — the
-// same caveat as the other song files in this set. So the moves below
-// capture the ARM/SHOULDER silhouette each named position produces, not
-// the hasta's finger shape or the footwork underneath it, and stay
-// purely front-facing.
-//
-// `moves` follows the same shape as the other song files' DANCE_MOVES:
-// pose criteria + ranges (or a customScore for asymmetric/relational
-// poses), `hints` / `genericHint` for Learn mode, and a `target`
-// skeleton for overlay.
 
 import audioSrc from '../../assets/music/bharatanatyam-thillana-song.mp3';
 import { scoreRange } from '../geometry';
 import { CONFIG } from '../config';
 
 // ============================================================
-// DANCE MOVE DATASET — Bharatanatyam's named adavus/hastas (used as
-// bharatanatyamThillana.js's `moves` array).
+// DANCE MOVE DATASET — Bharatanatyam's named adavus/hastas
 // ============================================================
 export const DANCE_MOVES = [
   {
     id: 'anjali-hasta',
     label: 'Anjali Hasta 🙏 (namaskaram — opening salutation)',
+    funFact: "Anjali Hasta is the traditional gesture of reverence used in Namaskaram, where the dancer seeks blessings from the divine, the Guru, and the audience before and after performing.",
     ranges: {
       leftKnee: [160, 180], rightKnee: [160, 180],
       leftElbow: [80, 130], rightElbow: [80, 130],
@@ -88,6 +43,7 @@ export const DANCE_MOVES = [
   {
     id: 'tattadavu',
     label: 'Tattadavu (tap step — arms open on a soft downward diagonal)',
+    funFact: "Tattadavu, derived from the word 'Tatta' meaning to strike, is the very first rhythm-building step taught to Bharatanatyam students to master basic footwork and rhythm.",
     ranges: {
       leftKnee: [160, 180], rightKnee: [160, 180],
       leftElbow: [150, 180], rightElbow: [150, 180],
@@ -116,6 +72,7 @@ export const DANCE_MOVES = [
   {
     id: 'nattadavu-kanan',
     label: 'Nattadavu — Right (rooting step: right arm extends at waist height)',
+    funFact: "'Natta' means to stretch or root—in Nattadavu, the dancer stretches and strikes with the heel while extending the hand, creating dynamic linear posture.",
     ranges: {
       leftKnee: [160, 180], rightKnee: [160, 180],
       rightElbow: [150, 180], rightShoulder: [15, 40],
@@ -144,6 +101,7 @@ export const DANCE_MOVES = [
   {
     id: 'nattadavu-kiri',
     label: 'Nattadavu — Left (rooting step: left arm extends at waist height)',
+    funFact: "Nattadavu trains balance and lateral body symmetry by mirroring precise heel strikes and sharp arm extensions across both sides of the body.",
     ranges: {
       leftKnee: [160, 180], rightKnee: [160, 180],
       leftElbow: [150, 180], leftShoulder: [15, 40],
@@ -172,6 +130,7 @@ export const DANCE_MOVES = [
   {
     id: 'visharu-adavu-kanan',
     label: 'Visharu Adavu — Right High (traveling diagonal: right sweeps up, left sweeps low)',
+    funFact: "'Visharu' translates to 'fanning' or 'sweeping.' This adavu utilizes expansive diagonal arm sweeps to cover stage space with fluid energy.",
     ranges: {
       leftKnee: [160, 180], rightKnee: [160, 180],
       rightElbow: [150, 180], rightShoulder: [110, 150],
@@ -200,6 +159,7 @@ export const DANCE_MOVES = [
   {
     id: 'visharu-adavu-kiri',
     label: 'Visharu Adavu — Left High (traveling diagonal: left sweeps up, right sweeps low)',
+    funFact: "Sweeping movements in Visharu Adavu emphasize geometric precision, combining high and low hand extensions across diagonal pathways.",
     ranges: {
       leftKnee: [160, 180], rightKnee: [160, 180],
       leftElbow: [150, 180], leftShoulder: [110, 150],
@@ -228,6 +188,7 @@ export const DANCE_MOVES = [
   {
     id: 'swastika-hasta',
     label: 'Swastika Hasta (forearms crossed in front of the chest)',
+    funFact: "Documented in the ancient classical treatise Abhinaya Darpana, Swastika Hasta is a Samyukta (double-hand) gesture symbolizing auspiciousness and symmetry.",
     customScore: (a) => {
       const bent = (v) => scoreRange(v, [90, 140], CONFIG.ANGLE_TOLERANCE_DEG);
       const crossed = a.leftWristX > a.rightWristX ? 1 : 0.2;
@@ -252,6 +213,7 @@ export const DANCE_MOVES = [
   {
     id: 'dola-hasta',
     label: 'Dola Hasta (swing hand — arms hang low and relaxed)',
+    funFact: "'Dola' translates to 'swing'—this relaxed, low arm pose is traditionally used in classical dance during rest transitions or to express calm, grounded poise.",
     ranges: {
       leftKnee: [160, 180], rightKnee: [160, 180],
       leftElbow: [130, 170], rightElbow: [130, 170],
@@ -282,6 +244,7 @@ export const DANCE_MOVES = [
   {
     id: 'alapadma',
     label: 'Alapadma 🪷 (blooming lotus — hands open above the head)',
+    funFact: "Alapadma literally means 'fully bloomed lotus.' It is one of the most expressive hand gestures in Indian classical dance, evoking beauty and spiritual blossoming.",
     ranges: {
       leftKnee: [160, 180], rightKnee: [160, 180],
       leftElbow: [150, 180], rightElbow: [150, 180],
@@ -315,6 +278,7 @@ export const DANCE_MOVES = [
   {
     id: 'mayura-chari',
     label: 'Mayura 🦚 (peacock finale — one arm crests overhead, other extends out)',
+    funFact: "Mayura represents the peacock, India's national bird. This pose mimics the grace and elevated crest of a peacock in a grand, celebratory flourish.",
     ranges: {
       leftKnee: [160, 180], rightKnee: [160, 180],
       leftElbow: [100, 140], leftShoulder: [140, 175],
@@ -342,13 +306,8 @@ export const DANCE_MOVES = [
   },
 ];
 
-// Generic across songs — searches whichever `moves` array is handed to it.
 export const getMoveById = (moves, id) => moves.find((m) => m.id === id) || null;
 
-// Generic criterion -> limb mapping, same as the other song files. In
-// practice this (and getMoveById above) probably belongs in a shared
-// module rather than being duplicated per song file — kept here only to
-// match the given file's format exactly.
 export const CRITERION_TO_LIMB = {
   leftElbow: ['leftArm'],
   leftShoulder: ['leftArm'],
@@ -359,7 +318,6 @@ export const CRITERION_TO_LIMB = {
   rightKnee: ['rightLeg'],
 };
 
-// ~90 seconds total, with breathing room between poses for transitions.
 const TIMELINE = [
   { id: 'anjali-1', moveId: 'anjali-hasta', start: 2, end: 4 },
   { id: 'tattadavu-1', moveId: 'tattadavu', start: 4, end: 6 },

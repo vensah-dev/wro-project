@@ -1,3 +1,4 @@
+
 // ============================================================
 // SONG: Chinese classical fan dance instrumental
 // ============================================================
@@ -49,6 +50,7 @@ export const DANCE_MOVES = [
   {
     id: 'shan-bang',
     label: 'Shan Bang 山膀 (mountain shoulder — arms open to the sides)',
+    funFact: "Shan Bang (Mountain Shoulder) creates a broad, rounded arc with the arms. In classical Chinese dance, this posture conveys majestic presence, open strength, and the grounded dignity of a mountain.",
     ranges: {
       leftKnee: [160, 180], rightKnee: [160, 180],
       leftElbow: [140, 175], rightElbow: [140, 175],
@@ -76,27 +78,28 @@ export const DANCE_MOVES = [
     },
   },
   {
-    id: 'an-zhang',
-    label: 'An Zhang 按掌 (press palm — hands press low, in front of the body)',
+    id: 'bao-yue',
+    label: 'Bao Yue 抱月 (embracing the moon — arms form a circle in front of the chest)',
+    funFact: "Bao Yue (Embracing the Moon) creates a continuous, rounded flow of energy in front of the chest. It represents completeness, gathering energy, and the graceful circular aesthetics essential to classical Chinese dance.",
     ranges: {
-      leftKnee: [160, 180], rightKnee: [160, 180],
-      leftElbow: [40, 85], rightElbow: [40, 85],
-      leftShoulder: [15, 50], rightShoulder: [15, 50],
-      wristGap: [0.3, 1.0],
+      leftKnee: [150, 180], rightKnee: [150, 180],
+      leftElbow: [90, 150], rightElbow: [90, 150],
+      leftShoulder: [40, 120], rightShoulder: [40, 120],
+      wristGap: [0.1, 1.2],
     },
     hints: {
       leftKnee: { low: 'Straighten your left leg a bit', high: 'Relax your left knee slightly' },
       rightKnee: { low: 'Straighten your right leg a bit', high: 'Relax your right knee slightly' },
-      leftElbow: { low: 'Curl your left forearm in a little more, toward your stomach', high: 'Let your left elbow open slightly' },
-      rightElbow: { low: 'Curl your right forearm in a little more, toward your stomach', high: 'Let your right elbow open slightly' },
-      leftShoulder: { low: null, high: 'Keep your left arm low and close to your body' },
-      rightShoulder: { low: null, high: 'Keep your right arm low and close to your body' },
-      wristGap: { low: null, high: 'Bring your hands in closer, pressing gently in front of your stomach' },
+      leftElbow: { low: 'Curve your left arm wider, like hugging a large barrel', high: 'Bend your left elbow a bit more' },
+      rightElbow: { low: 'Curve your right arm wider, like hugging a large barrel', high: 'Bend your right elbow a bit more' },
+      leftShoulder: { low: 'Raise your left arm up to chest level', high: 'Lower your left arm to chest level' },
+      rightShoulder: { low: 'Raise your right arm up to chest level', high: 'Lower your right arm to chest level' },
+      wristGap: { low: 'Bring your hands closer together in front of your chest', high: 'Separate your hands just slightly' },
     },
     target: {
       leftShoulder: { x: 0.42, y: 0.32 }, rightShoulder: { x: 0.58, y: 0.32 },
-      leftElbow: { x: 0.36, y: 0.44 }, rightElbow: { x: 0.64, y: 0.44 },
-      leftWrist: { x: 0.40, y: 0.50 }, rightWrist: { x: 0.60, y: 0.50 },
+      leftElbow: { x: 0.25, y: 0.35 }, rightElbow: { x: 0.75, y: 0.35 },
+      leftWrist: { x: 0.45, y: 0.35 }, rightWrist: { x: 0.55, y: 0.35 },
       leftHip: { x: 0.44, y: 0.62 }, rightHip: { x: 0.56, y: 0.62 },
       leftKnee: { x: 0.44, y: 0.80 }, rightKnee: { x: 0.56, y: 0.80 },
       leftAnkle: { x: 0.44, y: 0.96 }, rightAnkle: { x: 0.56, y: 0.96 },
@@ -107,6 +110,7 @@ export const DANCE_MOVES = [
   {
     id: 'tuo-zhang',
     label: 'Tuo Zhang 托掌 (uphold palm — hands arc up above the forehead)',
+    funFact: "Tuo Zhang (Uphold Palm) reaches skyward like upholding a precious object. In Chinese dance aesthetics, this gesture symbolizes reverence and the harmony between earth and the heavens.",
     ranges: {
       leftKnee: [160, 180], rightKnee: [160, 180],
       leftElbow: [110, 150], rightElbow: [110, 150],
@@ -136,6 +140,7 @@ export const DANCE_MOVES = [
   {
     id: 'shun-feng-qi-right',
     label: 'Shun Feng Qi 顺风旗 — Right (flag in the wind: right side, left overhead)',
+    funFact: "Shun Feng Qi (Flag in the Wind) pairs Shan Bang with Tuo Zhang in an iconic asymmetrical stance, evoking the image of a silk banner floating gracefully on a gentle breeze.",
     ranges: {
       leftKnee: [160, 180], rightKnee: [160, 180],
       rightElbow: [140, 175], rightShoulder: [80, 110],
@@ -164,6 +169,7 @@ export const DANCE_MOVES = [
   {
     id: 'shun-feng-qi-left',
     label: 'Shun Feng Qi 顺风旗 — Left (flag in the wind: left side, right overhead)',
+    funFact: "Shun Feng Qi (Flag in the Wind) creates dynamic visual contrast. By sweeping one arm overhead and the other outward, it reflects fluid balance in classical fan and ribbon dances.",
     ranges: {
       leftKnee: [160, 180], rightKnee: [160, 180],
       leftElbow: [140, 175], leftShoulder: [80, 110],
@@ -192,6 +198,7 @@ export const DANCE_MOVES = [
   {
     id: 'chong-zhang-right',
     label: 'Chong Zhang 冲掌 — Right (thrusting palm: right hand thrusts forward, left tucks at the ribs)',
+    funFact: "Chong Zhang (Thrusting Palm) combines a crisp, linear extension with a grounded core. It captures the concept of 'Gang Rou Xiang Ji'—the artistic balance between soft grace and sudden, precise energy.",
     ranges: {
       leftKnee: [160, 180], rightKnee: [160, 180],
       rightElbow: [160, 180], rightShoulder: [50, 85],
@@ -220,6 +227,7 @@ export const DANCE_MOVES = [
   {
     id: 'chong-zhang-left',
     label: 'Chong Zhang 冲掌 — Left (thrusting palm: left hand thrusts forward, right tucks at the ribs)',
+    funFact: "Chong Zhang (Thrusting Palm) directs focal energy across the body's diagonal. In fan dancing, this sudden sharp thrust creates a striking contrast against softer, continuous movements.",
     ranges: {
       leftKnee: [160, 180], rightKnee: [160, 180],
       leftElbow: [160, 180], leftShoulder: [50, 85],
@@ -248,6 +256,7 @@ export const DANCE_MOVES = [
   {
     id: 'yun-shou',
     label: 'Yun Shou 云手 (cloud hands — flowing circular hands in front of the torso)',
+    funFact: "Yun Shou (Cloud Hands) is a classic continuous motion where the hands flow past one another like drifting clouds. Rooted in traditional philosophy, it embodies the uninterrupted exchange of Yin and Yang.",
     customScore: (a) => {
       const bentEnough = (v) => scoreRange(v, [70, 140], CONFIG.ANGLE_TOLERANCE_DEG);
       const wristVerticalOffset = Math.abs(a.leftWristY - a.rightWristY);
@@ -291,7 +300,7 @@ export const CRITERION_TO_LIMB = {
 // ~90 seconds total, with breathing room between poses for transitions.
 const TIMELINE = [
   { id: 'shan-bang-1', moveId: 'shan-bang', start: 2, end: 4 },
-  { id: 'an-zhang-1', moveId: 'an-zhang', start: 4, end: 6 },
+  { id: 'bao-yue-1', moveId: 'bao-yue', start: 4, end: 6 },
   { id: 'tuo-zhang-1', moveId: 'tuo-zhang', start: 6, end: 8 },
   { id: 'shun-feng-qi-right-1', moveId: 'shun-feng-qi-right', start: 8, end: 10 },
   { id: 'shun-feng-qi-left-1', moveId: 'shun-feng-qi-left', start: 10, end: 12 },
@@ -310,3 +319,4 @@ export default {
   timeline: TIMELINE,
   moves: DANCE_MOVES,
 };
+

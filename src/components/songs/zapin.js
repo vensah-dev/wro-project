@@ -15,14 +15,15 @@
 //     not an ornamental raised curve. Different Zapin variants (e.g.
 //     Zapin Johor vs. Zapin Tenglu) are mostly distinguished by how
 //     this hand-swing is styled, while the footwork stays the same.
-//   - ragam tepuk: a clapping pattern — hands meet in front at chest
-//     height with more forward arm extension than the sembah's close,
-//     folded hold.
+//   - ragam siku jalak: elbows flared outward wide to the sides at
+//     shoulder level like a cock's wings, providing clear lateral
+//     2D planar separation for tracking.
 //   - ragam unta ("camel pattern"): an undulating, rolling arm/shoulder
 //     motion echoing Zapin's desert-trade-route origin — a nod to the
 //     camel's gait, one side rising as the other falls.
-//   - ragam mencedok ("scooping"): one arm draws a scooping arc from
-//     low in front of the body up toward the chest, like ladling water.
+//   - ragam layar ("sailing"): one arm extended high diagonally sideways
+//     like a sail while the opposite arm stays low, giving clear diagonal
+//     2D keypoint contrast across the chest.
 //   - ragam berkayuh ("paddling"): one arm reaches forward and down
 //     while the other pulls back near the waist, echoing a paddling
 //     motion — documented in river-village Zapin variants like Zapin
@@ -51,17 +52,18 @@ import { CONFIG } from '../config';
 
 // ============================================================
 // DANCE MOVE DATASET — Zapin's named ragam (used as zapin.js's `moves`
-// array).
+// array). Tolerance ranges expanded for flexible 2D camera detection.
 // ============================================================
 export const DANCE_MOVES = [
   {
     id: 'sembah-tamu',
     label: 'Sembah Tamu 🙏 (opening salutation)',
+    funFact: "The Sembah is a traditional Malay gesture of humility and respect performed at the start of a dance to greet the audience and community elders.",
     ranges: {
-      leftKnee: [160, 180], rightKnee: [160, 180],
-      leftElbow: [80, 130], rightElbow: [80, 130],
-      leftShoulder: [10, 50], rightShoulder: [10, 50],
-      wristGap: [0, 0.4],
+      leftKnee: [135, 180], rightKnee: [135, 180],
+      leftElbow: [65, 145], rightElbow: [65, 145],
+      leftShoulder: [0, 65], rightShoulder: [0, 65],
+      wristGap: [0, 0.55],
     },
     hints: {
       leftKnee: { low: 'Straighten your left leg a bit', high: 'Relax your left knee slightly' },
@@ -86,10 +88,11 @@ export const DANCE_MOVES = [
   {
     id: 'melenggang-kanan',
     label: 'Melenggang — Kanan Depan (natural hand swing, right forward)',
+    funFact: "Melenggang is the core hand swing of Zapin, performed with relaxed, loosely closed hands to maintain effortless poise alongside energetic footwork.",
     ranges: {
-      leftKnee: [160, 180], rightKnee: [160, 180],
-      rightElbow: [155, 180], rightShoulder: [15, 45],
-      leftElbow: [155, 180], leftShoulder: [0, 20],
+      leftKnee: [135, 180], rightKnee: [135, 180],
+      rightElbow: [135, 180], rightShoulder: [5, 60],
+      leftElbow: [135, 180], leftShoulder: [0, 35],
     },
     hints: {
       leftKnee: { low: 'Straighten your left leg a bit', high: 'Relax your left knee slightly' },
@@ -114,10 +117,11 @@ export const DANCE_MOVES = [
   {
     id: 'melenggang-kiri',
     label: 'Melenggang — Kiri Depan (natural hand swing, left forward)',
+    funFact: "While Zapin footwork shares common steps, unique variations in the melenggang hand swing help distinguish regional styles like Zapin Johor and Zapin Tenglu.",
     ranges: {
-      leftKnee: [160, 180], rightKnee: [160, 180],
-      leftElbow: [155, 180], leftShoulder: [15, 45],
-      rightElbow: [155, 180], rightShoulder: [0, 20],
+      leftKnee: [135, 180], rightKnee: [135, 180],
+      leftElbow: [135, 180], leftShoulder: [5, 60],
+      rightElbow: [135, 180], rightShoulder: [0, 35],
     },
     hints: {
       leftKnee: { low: 'Straighten your left leg a bit', high: 'Relax your left knee slightly' },
@@ -140,27 +144,27 @@ export const DANCE_MOVES = [
     },
   },
   {
-    id: 'ragam-tepuk',
-    label: 'Ragam Tepuk 👏 (clapping pattern)',
+    id: 'ragam-siku-jalak',
+    label: 'Ragam Siku Jalak 🐓 (flared elbow stance)',
+    funFact: "Ragam Siku Jalak features elbows flared broadly to the sides, mimicking the proud stance of a rooster and creating a clear lateral shape.",
     ranges: {
-      leftKnee: [160, 180], rightKnee: [160, 180],
-      leftElbow: [110, 150], rightElbow: [110, 150],
-      leftShoulder: [40, 75], rightShoulder: [40, 75],
-      wristGap: [0, 0.3],
+      leftKnee: [135, 180], rightKnee: [135, 180],
+      leftElbow: [50, 130], rightElbow: [50, 130],
+      leftShoulder: [50, 120], rightShoulder: [50, 120],
     },
     hints: {
       leftKnee: { low: 'Straighten your left leg a bit', high: 'Relax your left knee slightly' },
       rightKnee: { low: 'Straighten your right leg a bit', high: 'Relax your right knee slightly' },
-      leftElbow: { low: 'Extend your left arm out a bit more for the clap', high: 'Bring your left elbow in a little' },
-      rightElbow: { low: 'Extend your right arm out a bit more for the clap', high: 'Bring your right elbow in a little' },
-      leftShoulder: { low: 'Raise your left arm a bit higher, out in front of you', high: 'Lower your left arm slightly' },
-      rightShoulder: { low: 'Raise your right arm a bit higher, out in front of you', high: 'Lower your right arm slightly' },
-      wristGap: { low: null, high: 'Bring your hands together to meet in a clap' },
+      leftElbow: { low: 'Open your left arm angle slightly', high: 'Bend your left elbow more towards 90 degrees' },
+      rightElbow: { low: 'Open your right arm angle slightly', high: 'Bend your right elbow more towards 90 degrees' },
+      leftShoulder: { low: 'Raise your left elbow up to shoulder height', high: 'Drop your left elbow slightly' },
+      rightShoulder: { low: 'Raise your right elbow up to shoulder height', high: 'Drop your right elbow slightly' },
     },
+    genericHint: 'Raise both elbows out wide to the sides at shoulder height with bent arms, bringing hands toward your waist/chest area',
     target: {
       leftShoulder: { x: 0.42, y: 0.32 }, rightShoulder: { x: 0.58, y: 0.32 },
-      leftElbow: { x: 0.34, y: 0.36 }, rightElbow: { x: 0.66, y: 0.36 },
-      leftWrist: { x: 0.48, y: 0.30 }, rightWrist: { x: 0.52, y: 0.30 },
+      leftElbow: { x: 0.22, y: 0.32 }, rightElbow: { x: 0.78, y: 0.32 },
+      leftWrist: { x: 0.38, y: 0.48 }, rightWrist: { x: 0.62, y: 0.48 },
       leftHip: { x: 0.44, y: 0.62 }, rightHip: { x: 0.56, y: 0.62 },
       leftKnee: { x: 0.44, y: 0.80 }, rightKnee: { x: 0.56, y: 0.80 },
       leftAnkle: { x: 0.44, y: 0.96 }, rightAnkle: { x: 0.56, y: 0.96 },
@@ -171,13 +175,14 @@ export const DANCE_MOVES = [
   {
     id: 'ragam-unta',
     label: 'Ragam Unta 🐫 (camel pattern — rolling, undulating sway)',
+    funFact: "Ragam Unta mimics the undulating gait of a camel, honoring Zapin's historical origins brought to the Malay world by Hadrami traders from Yemen.",
     customScore: (a) => {
-      const armOut = (v) => scoreRange(v, [140, 180], CONFIG.ANGLE_TOLERANCE_DEG);
+      const armOut = (v) => scoreRange(v, [120, 180], CONFIG.ANGLE_TOLERANCE_DEG);
       const shoulderAsym = Math.abs(a.leftShoulder - a.rightShoulder);
       return (
         armOut(a.leftElbow) * 0.2 +
         armOut(a.rightElbow) * 0.2 +
-        scoreRange(shoulderAsym, [30, 90], CONFIG.ANGLE_TOLERANCE_DEG) * 0.6
+        scoreRange(shoulderAsym, [20, 100], CONFIG.ANGLE_TOLERANCE_DEG) * 0.6
       );
     },
     genericHint: 'Extend both arms out to the sides, but let one ride higher than the other, like a gentle rolling wave — echoing a camel\u2019s undulating gait',
@@ -193,26 +198,27 @@ export const DANCE_MOVES = [
     },
   },
   {
-    id: 'ragam-mencedok',
-    label: 'Ragam Mencedok 🥄 (scooping — right hand ladles upward)',
+    id: 'ragam-layar',
+    label: 'Ragam Layar ⛵ (sail pattern — high diagonal extension)',
+    funFact: "Ragam Layar extends one arm high diagonally like a billowing sail, referencing the maritime trading routes that helped spread Zapin across the Malay Archipelago.",
     ranges: {
-      leftKnee: [160, 180], rightKnee: [160, 180],
-      rightElbow: [90, 130], rightShoulder: [40, 80],
-      leftElbow: [150, 180], leftShoulder: [0, 20],
+      leftKnee: [135, 180], rightKnee: [135, 180],
+      rightElbow: [130, 180], rightShoulder: [105, 175],
+      leftElbow: [130, 180], leftShoulder: [0, 60],
     },
     hints: {
       leftKnee: { low: 'Straighten your left leg a bit', high: 'Relax your left knee slightly' },
       rightKnee: { low: 'Straighten your right leg a bit', high: 'Relax your right knee slightly' },
-      rightElbow: { low: 'Curve your right arm into more of a scoop', high: 'Open your right elbow a little' },
-      leftElbow: { low: null, high: 'Let your left arm relax straight down at your side' },
-      rightShoulder: { low: 'Scoop your right arm up higher, toward your chest', high: 'Bring your right arm down slightly' },
-      leftShoulder: { low: null, high: 'Keep your left arm low and relaxed at your side' },
+      rightElbow: { low: 'Extend your right arm straighter upward', high: null },
+      leftElbow: { low: 'Extend your left arm straighter downward', high: null },
+      rightShoulder: { low: 'Raise your right arm higher diagonally', high: 'Lower your right arm slightly' },
+      leftShoulder: { low: null, high: 'Keep your left arm extended low at your side' },
     },
-    genericHint: 'Draw your right hand up in a scooping arc from low in front of you toward your chest, like ladling water — left arm stays relaxed at your side',
+    genericHint: 'Reach your right arm high and wide out to the upper diagonal while keeping your left arm relaxed down near your side',
     target: {
       leftShoulder: { x: 0.42, y: 0.32 }, rightShoulder: { x: 0.58, y: 0.32 },
-      leftElbow: { x: 0.40, y: 0.56 }, rightElbow: { x: 0.66, y: 0.42 },
-      leftWrist: { x: 0.38, y: 0.66 }, rightWrist: { x: 0.56, y: 0.28 },
+      leftElbow: { x: 0.32, y: 0.52 }, rightElbow: { x: 0.78, y: 0.20 },
+      leftWrist: { x: 0.22, y: 0.68 }, rightWrist: { x: 0.92, y: 0.10 },
       leftHip: { x: 0.44, y: 0.62 }, rightHip: { x: 0.56, y: 0.62 },
       leftKnee: { x: 0.44, y: 0.80 }, rightKnee: { x: 0.56, y: 0.80 },
       leftAnkle: { x: 0.44, y: 0.96 }, rightAnkle: { x: 0.56, y: 0.96 },
@@ -223,10 +229,11 @@ export const DANCE_MOVES = [
   {
     id: 'ragam-berkayuh',
     label: 'Ragam Berkayuh 🚣 (paddling — left reaches out, right pulls back)',
+    funFact: "Ragam Berkayuh mimics the rhythmic motion of paddling a boat, reflecting the coastal and riverine heritage of villages like Batu Pahat.",
     ranges: {
-      leftKnee: [160, 180], rightKnee: [160, 180],
-      leftElbow: [150, 180], leftShoulder: [30, 60],
-      rightElbow: [70, 110], rightShoulder: [10, 35],
+      leftKnee: [135, 180], rightKnee: [135, 180],
+      leftElbow: [130, 180], leftShoulder: [20, 75],
+      rightElbow: [55, 125], rightShoulder: [0, 50],
     },
     hints: {
       leftKnee: { low: 'Straighten your left leg a bit', high: 'Relax your left knee slightly' },
@@ -251,15 +258,16 @@ export const DANCE_MOVES = [
   {
     id: 'wainab',
     label: 'Wainab ✨ (closing figure — open, raised flourish)',
+    funFact: "Wainab is the energetic finale figure of a Zapin suite, where dancers execute open flourishes and turns as the gambus music accelerates to its climax.",
     ranges: {
-      leftKnee: [160, 180], rightKnee: [160, 180],
-      leftElbow: [130, 170], rightElbow: [130, 170],
-      leftShoulder: [100, 140], rightShoulder: [100, 140],
+      leftKnee: [135, 180], rightKnee: [135, 180],
+      leftElbow: [110, 180], rightElbow: [110, 180],
+      leftShoulder: [80, 160], rightShoulder: [80, 160],
     },
     customScore: (a) => {
-      const armsUp = (v) => scoreRange(v, [130, 175], CONFIG.ANGLE_TOLERANCE_DEG);
-      const leftUp = a.leftWristY < a.leftShoulderY - 0.05 ? 1 : 0.4;
-      const rightUp = a.rightWristY < a.rightShoulderY - 0.05 ? 1 : 0.4;
+      const armsUp = (v) => scoreRange(v, [110, 180], CONFIG.ANGLE_TOLERANCE_DEG);
+      const leftUp = a.leftWristY < a.leftShoulderY ? 1 : 0.5;
+      const rightUp = a.rightWristY < a.rightShoulderY ? 1 : 0.5;
       return (
         armsUp(a.leftElbow) * 0.2 +
         armsUp(a.rightElbow) * 0.2 +
@@ -306,12 +314,12 @@ const TIMELINE = [
   { id: 'melenggang-kanan-1', moveId: 'melenggang-kanan', start: 4, end: 6 },
   { id: 'melenggang-kiri-1', moveId: 'melenggang-kiri', start: 6, end: 8 },
   { id: 'melenggang-kanan-2', moveId: 'melenggang-kanan', start: 8, end: 10 },
-  { id: 'ragam-tepuk-1', moveId: 'ragam-tepuk', start: 10, end: 12 },
+  { id: 'ragam-siku-jalak-1', moveId: 'ragam-siku-jalak', start: 10, end: 12 },
   { id: 'ragam-unta-1', moveId: 'ragam-unta', start: 12, end: 14 },
-  { id: 'ragam-mencedok-1', moveId: 'ragam-mencedok', start: 14, end: 16 },
+  { id: 'ragam-layar-1', moveId: 'ragam-layar', start: 14, end: 16 },
   { id: 'ragam-berkayuh-1', moveId: 'ragam-berkayuh', start: 16, end: 18 },
   { id: 'melenggang-kiri-2', moveId: 'melenggang-kiri', start: 18, end: 20 },
-  { id: 'ragam-tepuk-2', moveId: 'ragam-tepuk', start: 20, end: 22 },
+  { id: 'ragam-siku-jalak-2', moveId: 'ragam-siku-jalak', start: 20, end: 22 },
   { id: 'ragam-unta-2', moveId: 'ragam-unta', start: 22, end: 24 },
   { id: 'sembah-2', moveId: 'sembah-tamu', start: 24, end: 26 },
   { id: 'wainab-1', moveId: 'wainab', start: 26, end: 28 },

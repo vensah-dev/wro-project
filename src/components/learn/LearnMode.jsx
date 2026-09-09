@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import WebcamFeed from '../shared/WebcamFeed';
 import PersonNotVisibleBanner from '../shared/PersonNotVisibleBanner';
 import GuidePanel from './GuidePanel';
+import MoveLorePanel from './MoveLorePanel'; // <-- 1. Import the new panel
 import PoseStatusLabel from './PoseStatusLabel';
 import LearnControls from './LearnControls';
 import LearnCompleteScreen from './LearnCompleteScreen';
@@ -57,6 +58,10 @@ export default function LearnMode({ song, onExit }) {
       )}
       
       <GuidePanel expectedMove={expectedMove} seqIndex={seqIndex} total={total} />
+      
+      {/* 2. Add the lore panel right here */}
+      <MoveLorePanel expectedMove={expectedMove} />
+
       <PoseStatusLabel limbFeedback={limbFeedback} genericHint={genericHint} isPersonVisible={isPersonVisible} />
       <PersonNotVisibleBanner isPersonVisible={isPersonVisible} isPlaying />
       <LearnControls

@@ -1,3 +1,4 @@
+// everything-i-am.js
 import audioSrc from '../../assets/music/everything-i-am-song.mp3';
 import { scoreRange } from '../geometry';
 import { CONFIG } from '../config';
@@ -18,6 +19,7 @@ export const DANCE_MOVES = [
   {
     id: 'salute',
     label: 'Salute 🫡 (proud and tall)',
+    funFact: 'The salute in National Day Parade routines represents honor and respect for the nation, inspired by uniformed youth groups and armed forces.',
     ranges: {
       rightElbow: [25, 65], rightShoulder: [65, 105],
       leftElbow: [155, 180], leftShoulder: [0, 25],
@@ -38,6 +40,7 @@ export const DANCE_MOVES = [
   {
     id: 'heart',
     label: 'Heart Hands 💖 (Everything I Am)',
+    funFact: 'Heart hands were prominently featured in NDP 2020 song-signing routines to express inclusivity, care, and compassion during the pandemic.',
     ranges: {
       leftElbow: [55, 110], rightElbow: [55, 110],
       leftShoulder: [15, 55], rightShoulder: [15, 55],
@@ -60,6 +63,7 @@ export const DANCE_MOVES = [
   {
     id: 'hips',
     label: 'Hands on Hips 🙆 (stand proud)',
+    funFact: 'Standing with hands on hips reflects confidence and strength—a central theme in Singapore’s national parade performances.',
     ranges: {
       leftElbow: [55, 100], rightElbow: [55, 100],
       leftShoulder: [0, 30], rightShoulder: [0, 30],
@@ -80,6 +84,7 @@ export const DANCE_MOVES = [
   {
     id: 'clap',
     label: 'Clap it Up 👏 (overhead clap)',
+    funFact: 'Overhead clapping is a staple of NDP audience interaction, uniting thousands across the Padang and heartlands in rhythm.',
     ranges: {
       leftElbow: [60, 110], rightElbow: [60, 110],
       leftShoulder: [130, 175], rightShoulder: [130, 175],
@@ -102,6 +107,7 @@ export const DANCE_MOVES = [
   {
     id: 'hug',
     label: 'Big Self Hug 🤗 (embrace the moment)',
+    funFact: 'The self-hug movement was introduced into NDP choreography to symbolize self-appreciation, emotional resilience, and solidarity.',
     ranges: {
       leftElbow: [15, 55], rightElbow: [15, 55],
       leftShoulder: [55, 100], rightShoulder: [55, 100],
@@ -122,6 +128,7 @@ export const DANCE_MOVES = [
   {
     id: 'point',
     label: 'Reach for the Skyline ✨ (point up and out)',
+    funFact: 'Pointing outward and upward symbolizes looking toward Singapore’s future skyline and reaching for new heights together as one people.',
     ranges: {
       rightElbow: [155, 180], rightShoulder: [140, 175],
       leftElbow: [155, 180], leftShoulder: [70, 110],

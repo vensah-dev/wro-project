@@ -3,7 +3,7 @@
 // ============================================================
 export const CONFIG = {
   // --- pose detection & matching ---
-  DETECTION_CONFIDENCE: 0.5,
+  DETECTION_CONFIDENCE: 0.6,
   ANGLE_TOLERANCE_DEG: 30,
   RATIO_TOLERANCE: 0.5,
   CONFIRM_FRAMES: 6,

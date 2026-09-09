@@ -40,7 +40,7 @@ function drawSkeleton(canvasCtx, canvasElement, landmarks, color) {
   canvasCtx.save();
   canvasCtx.strokeStyle = color;
   canvasCtx.fillStyle = color;
-  canvasCtx.lineWidth = 4;
+  canvasCtx.lineWidth = 10;
 
   for (const [i, j] of POSE_CONNECTIONS) {
     const a = landmarks[i];
@@ -52,7 +52,7 @@ function drawSkeleton(canvasCtx, canvasElement, landmarks, color) {
     canvasCtx.stroke();
   }
 
-  canvasCtx.lineWidth = 1;
+  canvasCtx.lineWidth = 5;
   for (const point of landmarks) {
     if (!point || !isVisible(point)) continue;
     canvasCtx.beginPath();

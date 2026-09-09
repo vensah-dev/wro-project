@@ -137,7 +137,7 @@ export default function EndScreen({ score, windowResults, onRestart, onBack, hig
       <h2 className="text-2xl font-bold text-gray-300">Dance Complete!</h2>
       <div className="text-6xl font-extrabold text-pink-400 text-center">{grade}</div>
       <div className="text-xl font-bold text-white">{score} points</div>
-      <div className="text-sm text-gray-400">{Math.round(avgAccuracy * 100)}% average accuracy</div>
+      <div className="text-sm text-gray-400">{Math.min(Math.round(avgAccuracy * 200), 100)}% average accuracy</div>
 
       {assignedName && (
         <div className="mt-2 flex flex-col items-center gap-1">

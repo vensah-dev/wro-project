@@ -12,8 +12,9 @@ import chinese from './assets/select-screen-bg/chinese.avif';
 import lionDance from './assets/select-screen-bg/lion-dance.jpg';
 import tomorrowsHereToday from './assets/select-screen-bg/tomorrows-here-today.jpg';
 import everythingIAm from './assets/select-screen-bg/everything-i-am.jpg';
+import fanDance from './assets/select-screen-bg/fan-dance.jpg';
 
-const listOfImages = [tomorrowsHereToday, everythingIAm, lionDance, chinese, indian, malay];
+const listOfImages = [tomorrowsHereToday, everythingIAm, fanDance, indian, malay];
 
 
 export default function SelectMenu({onExit, highScore, setHighScore, cameraRotation}) {
