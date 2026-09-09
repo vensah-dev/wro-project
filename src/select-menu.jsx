@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import CompeteMode from './components/compete/CompeteMode';
 import LearnMode from './components/learn/LearnMode';
 import { getSongById } from './components/songs';
@@ -42,17 +42,7 @@ export default function SelectMenu({onExit, highScore, setHighScore, cameraRotat
       ))}
       <div className="absolute inset-0 bg-linear-to-l from-black to-transparent -z-5"/>
 
-      <ul className={`flex w-[80vw] flex-col gap-3 items-end  ${SONGS.length > 10 ? 'justify-start' : 'justify-center'} overflow-y-scroll py-8`}>
-        {SONGS.map((song, index) => (
-          <li
-            key={index}
-            className={`group relative flex items-center justify-between gap-4 overflow-hidden rounded-l-md px-3 py-6 hover:w-[75vw] transition-all duration-300 ease-in-out hover:text-white ${selectedSong === song.id ? 'bg-pink-500/75 w-[60vw] text-white' : 'bg-pink-500/25 w-[45vw] text-white/50 hover:bg-pink-500/60'}`}
-            onClick={() => {setSelectedSong(song.id); setCurrentImageIndex(index);}}
-          >
-            <span className="truncate text-xl font-bold">{song.title}</span>
-          </li>
-        ))}
-      </ul>
+      <SongSelector SONGS={SONGS} selectedSong = {selectedSong} setSelectedSong= {setSelectedSong} setCurrentImageIndex= {setCurrentImageIndex} />
 
       <div className="flex justify-between w-full h-shrink items-centerself-end absolute bottom-0 px-16 py-8 bg-gray-50">
         <div onClick={onExit} className='relative text-2xl font-semibold text-pink-500/75 hover:text-pink-500/50 w-min active:gap-2 gap-0 flex items-center justify-between transition-all duration-150 ease-in-out'>
@@ -80,5 +70,81 @@ export default function SelectMenu({onExit, highScore, setHighScore, cameraRotat
       </div>
 
     </div>
+  );
+}
+
+export function SongSelector({ SONGS, selectedSong, setSelectedSong, setCurrentImageIndex }) {
+  const scrollRef = useRef(null);
+
+  // Constants for scroll math
+  const ITEM_HEIGHT = 76; // visually matches your original py-6
+  const GAP = 12; // Matches Tailwind's gap-3 (0.75rem = 12px)
+  const ITEM_STRIDE = ITEM_HEIGHT + GAP; // Total distance between items: 88px
+
+  // 1. Handle native scrolling & update state
+  const handleScroll = () => {
+    if (!scrollRef.current) return;
+    const scrollTop = scrollRef.current.scrollTop;
+    
+    // Find which index is closest to the scroll position
+    const index = Math.round(scrollTop / ITEM_STRIDE);
+    const clampedIndex = Math.max(0, Math.min(index, SONGS.length - 1));
+    
+    const currentSong = SONGS[clampedIndex];
+    
+    // Only update if it's actually a new song (prevents lag/infinite loops)
+    if (currentSong && currentSong.id !== selectedSong) {
+      setSelectedSong(currentSong.id);
+      setCurrentImageIndex(clampedIndex);
+    }
+  };
+
+  // 2. Smoothly snap to center when an item is clicked
+  const scrollToIndex = (index) => {
+    if (!scrollRef.current) return;
+    scrollRef.current.scrollTo({
+      top: index * ITEM_STRIDE,
+      behavior: 'smooth',
+    });
+  };
+
+  return (
+    <ul
+      ref={scrollRef}
+      onScroll={handleScroll}
+      style={{ scrollbarWidth: 'none' }} // Hides scrollbar on Firefox
+      className={`
+        flex w-[80vw] h-[60vh] flex-col gap-3 items-end overflow-y-scroll 
+        snap-y snap-mandatory 
+        py-[calc(30vh-38px)] /* (Container Height / 2) - (Item Height / 2) */
+      `}
+    >
+      {SONGS.map((song, index) => {
+        const isSelected = selectedSong === song.id;
+
+        return (
+          <li
+            key={index}
+            onClick={() => {
+              setSelectedSong(song.id);
+              setCurrentImageIndex(index);
+              scrollToIndex(index); // Auto-scroll to center on click
+            }}
+            className={`
+              group relative flex h-[76px] shrink-0 snap-center cursor-pointer
+              items-center justify-between gap-4 overflow-clip rounded-l-md px-3 
+              hover:w-[75vw] transition-all duration-300 ease-in-out hover:text-white
+              ${
+                isSelected
+                  ? 'bg-pink-500/75 w-[60vw] text-white'
+                  : 'bg-pink-500/25 w-[45vw] text-white/50 hover:bg-pink-500/60'
+              }
+            `}
+          >
+            <span className="truncate text-xl font-bold">{song.title}</span>
+          </li>
+        );
+      })}
+    </ul>
   );
 }
