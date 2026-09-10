@@ -57,12 +57,12 @@ export default function LearnMode({ song, onExit, cameraRotation }) {
         </div>
       )}
       
-      <GuidePanel expectedMove={expectedMove} seqIndex={seqIndex} total={total} />
+      {/* <GuidePanel expectedMove={expectedMove} seqIndex={seqIndex} total={total} /> */}
       
       {/* 2. Add the lore panel right here */}
       <MoveLorePanel expectedMove={expectedMove} />
 
-      <PoseStatusLabel limbFeedback={limbFeedback} genericHint={genericHint} isPersonVisible={isPersonVisible} />
+      {/* <PoseStatusLabel limbFeedback={limbFeedback} genericHint={genericHint} isPersonVisible={isPersonVisible} /> */}
       <PersonNotVisibleBanner isPersonVisible={isPersonVisible} isPlaying />
       <LearnControls
         isFirst={isFirst}
