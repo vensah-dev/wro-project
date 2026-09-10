@@ -8,7 +8,7 @@ import LearnControls from './LearnControls';
 import LearnCompleteScreen from './LearnCompleteScreen';
 import { useLearnMode } from './useLearnMode';
 
-export default function LearnMode({ song, onExit }) {
+export default function LearnMode({ song, onExit, cameraRotation }) {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [isComplete, setIsComplete] = useState(false);
@@ -32,7 +32,7 @@ export default function LearnMode({ song, onExit }) {
 
   return (
     <div className="relative flex h-screen w-screen items-center justify-center overflow-hidden bg-neutral-900">
-      <WebcamFeed videoRef={videoRef} canvasRef={canvasRef} />
+      <WebcamFeed videoRef={videoRef} canvasRef={canvasRef} cameraRotation={cameraRotation} />
 
       {poseStatus === 'loading' && (
         <div className="absolute inset-0 z-50 flex flex-col items-center justify-center gap-4 bg-black/80 text-white">

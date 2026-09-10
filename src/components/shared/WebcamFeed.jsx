@@ -10,7 +10,8 @@ export default function WebcamFeed({ videoRef, canvasRef, cameraRotation }) {
         ref={videoRef}
         autoPlay
         playsInline
-        className="absolute inset-0 h-full w-full -scale-x-100 object-cover"
+        fill
+        className={`absolute inset-0 w-screen h-screen aspect[${viewWidth}/${viewHeight}] -scale-x-100 object-cover`}
       />
       <canvas
         ref={canvasRef}
