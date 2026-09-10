@@ -31,7 +31,7 @@ export default function CompeteMode({ song, onExit, highScore, setHighScore, cam
   } = useCompeteMode({ song, videoRef, canvasRef, guideCanvasRef, audioRef });
 
   return (
-    <div className="relative flex h-screen w-screen items-center justify-center overflow-hidden bg-gary-50">
+    <div className="relative flex h-screen w-screen items-center justify-center overflow-hidden bg-black">
       <WebcamFeed videoRef={videoRef} canvasRef={canvasRef} cameraRotation={cameraRotation} />
 
       {poseStatus === 'loading' && (

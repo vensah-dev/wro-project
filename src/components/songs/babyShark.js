@@ -13,7 +13,7 @@
 // rather each song fully own its moves, cut that array out of
 // danceMoves.js and paste it directly into this file instead.
 
-import audioSrc from '../../assets/music/baby-shark-song.mp3';
+import audioSrc from '../../assets/music/baby-shark-song.mov';
 import { scoreRange } from '../geometry';
 import { CONFIG } from '../config';
 

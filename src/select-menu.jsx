@@ -13,8 +13,9 @@ import lionDance from './assets/select-screen-bg/lion-dance.jpg';
 import tomorrowsHereToday from './assets/select-screen-bg/tomorrows-here-today.jpg';
 import everythingIAm from './assets/select-screen-bg/everything-i-am.jpg';
 import fanDance from './assets/select-screen-bg/fan-dance.jpg';
+import babyShark from './assets/select-screen-bg/baby-shark.avif';
 
-const listOfImages = [tomorrowsHereToday, everythingIAm, fanDance, indian, malay];
+const listOfImages = [tomorrowsHereToday, everythingIAm, fanDance, indian, malay, babyShark];
 
 
 export default function SelectMenu({onExit, highScore, setHighScore, cameraRotation}) {

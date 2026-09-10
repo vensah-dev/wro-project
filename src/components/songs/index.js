@@ -15,7 +15,7 @@ import singaporeLionDance from './singaporeLionDance';
 import everythingIAm from './everything-i-am.js';
 import tomorrowsHereToday from './tomorrows-here-today.js';
 
-export const SONGS = [tomorrowsHereToday, everythingIAm, chineseFanDance, bharatanatyam, zapin];
+export const SONGS = [tomorrowsHereToday, everythingIAm, chineseFanDance, bharatanatyam, zapin, babyShark];
 export function getSongById(id) {
   return SONGS.find((song) => song.id === id) || null;
 }
