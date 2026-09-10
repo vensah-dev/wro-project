@@ -26,7 +26,7 @@ export default function SelectMenu({onExit, highScore, setHighScore, cameraRotat
   const handleExit = () => {setSelectedMode(null);};
   var song = selectedSong ? getSongById(selectedSong) : null;
 
-  if (selectedMode === 'learn' && song) return <LearnMode song={getSongById(selectedSong)} onExit={handleExit}/>;
+  if (selectedMode === 'learn' && song) return <LearnMode song={getSongById(selectedSong)} onExit={handleExit} cameraRotation={cameraRotation} />;
   if (selectedMode === 'compete' && song) return <CompeteMode song={getSongById(selectedSong)} onExit={handleExit} highScore={highScore} setHighScore={setHighScore} cameraRotation={cameraRotation} />;
 
   return(
