@@ -7,6 +7,7 @@ import { SerialProvider } from './components/hooks/SerialContext';
 import { loadMediapipe,  } from './components/hooks/usePoseLandmarks';
 loadMediapipe().catch(() => {});
 
+
 createRoot(document.getElementById('root')).render(
   <SerialProvider>
     <StrictMode>

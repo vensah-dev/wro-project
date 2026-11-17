@@ -23,6 +23,94 @@ import { CONFIG } from '../config';
 // the original single-file version. `hints` and `genericHint` explain
 // *why* a pose is wrong, direction by direction, for Learn mode.
 // ============================================================
+
+const STANDING_LEGS = {
+  leftHip: { x: 0.44, y: 0.62 }, rightHip: { x: 0.56, y: 0.62 },
+  leftKnee: { x: 0.44, y: 0.80 }, rightKnee: { x: 0.56, y: 0.80 },
+  leftAnkle: { x: 0.44, y: 0.96 }, rightAnkle: { x: 0.56, y: 0.96 },
+  leftHeel: { x: 0.42, y: 0.98 }, rightHeel: { x: 0.58, y: 0.98 },
+  leftFootIndex: { x: 0.46, y: 1.00 }, rightFootIndex: { x: 0.54, y: 1.00 },
+};
+const SHOULDERS = { leftShoulder: { x: 0.42, y: 0.32 }, rightShoulder: { x: 0.58, y: 0.32 } };
+
+const fwdHints = (side, name) => ({
+  [`${side}Forward`]: {
+    low: `Swing your ${name} arm further forward`,
+    high: `Bring your ${name} arm back a little`,
+  },
+  [`${side}Elbow3D`]: {
+    low: `Straighten your ${name} arm`,
+    high: null,
+  },
+});
+
+export const FORWARD_MOVES = [
+  {
+    id: 'chomp',
+    label: 'Forward Chomp 🦷 (arms straight out front)',
+    forward: { left: 90, right: 90 }, // puppet forward-servo targets (deg)
+    ranges: {
+      leftKnee: [160, 180], rightKnee: [160, 180],
+      leftForward: [65, 115], rightForward: [65, 115],
+      leftElbow3D: [140, 180], rightElbow3D: [140, 180],
+    },
+    hints: { ...fwdHints('left', 'left'), ...fwdHints('right', 'right') },
+    target: {
+      ...SHOULDERS, ...STANDING_LEGS,
+      leftElbow: { x: 0.41, y: 0.37 }, rightElbow: { x: 0.59, y: 0.37 },
+      leftWrist: { x: 0.43, y: 0.42 }, rightWrist: { x: 0.57, y: 0.42 },
+    },
+  },
+  {
+    id: 'scoop',
+    label: 'Scoop 🌊 (arms forward and low)',
+    forward: { left: 45, right: 45 },
+    ranges: {
+      leftKnee: [160, 180], rightKnee: [160, 180],
+      leftForward: [25, 65], rightForward: [25, 65],
+      leftElbow3D: [140, 180], rightElbow3D: [140, 180],
+    },
+    hints: { ...fwdHints('left', 'left'), ...fwdHints('right', 'right') },
+    target: {
+      ...SHOULDERS, ...STANDING_LEGS,
+      leftElbow: { x: 0.40, y: 0.39 }, rightElbow: { x: 0.60, y: 0.39 },
+      leftWrist: { x: 0.40, y: 0.46 }, rightWrist: { x: 0.60, y: 0.46 },
+    },
+  },
+  {
+    id: 'dive',
+    label: 'Dive In! 🤿 (arms forward and up)',
+    forward: { left: 135, right: 135 },
+    ranges: {
+      leftKnee: [160, 180], rightKnee: [160, 180],
+      leftForward: [105, 155], rightForward: [105, 155],
+      leftElbow3D: [140, 180], rightElbow3D: [140, 180],
+    },
+    hints: { ...fwdHints('left', 'left'), ...fwdHints('right', 'right') },
+    target: {
+      ...SHOULDERS, ...STANDING_LEGS,
+      leftElbow: { x: 0.41, y: 0.25 }, rightElbow: { x: 0.59, y: 0.25 },
+      leftWrist: { x: 0.42, y: 0.18 }, rightWrist: { x: 0.58, y: 0.18 },
+    },
+  },
+  {
+    id: 'swim',
+    label: 'Swim Stroke 🏊 (one arm forward, one down)',
+    forward: { left: 90, right: 0 },
+    ranges: {
+      leftKnee: [160, 180], rightKnee: [160, 180],
+      leftForward: [60, 120], rightForward: [0, 35],
+      leftElbow3D: [140, 180], rightElbow3D: [140, 180],
+    },
+    hints: { ...fwdHints('left', 'left'), ...fwdHints('right', 'right') },
+    target: {
+      ...SHOULDERS, ...STANDING_LEGS,
+      leftElbow: { x: 0.41, y: 0.37 }, rightElbow: { x: 0.60, y: 0.42 },
+      leftWrist: { x: 0.43, y: 0.42 }, rightWrist: { x: 0.60, y: 0.52 },
+    },
+  },
+];
+
 export const DANCE_MOVES = [
   {
     id: 'baby',
@@ -170,6 +258,7 @@ export const DANCE_MOVES = [
       leftFootIndex: { x: 0.46, y: 1.00 }, rightFootIndex: { x: 0.54, y: 1.00 },
     },
   },
+  ...FORWARD_MOVES,
 ];
 
 // Was `getMoveById = (id) => DANCE_MOVES.find(...)`, i.e. scoped to this
@@ -191,19 +280,24 @@ export const CRITERION_TO_LIMB = {
   wristGap: ['leftArm', 'rightArm'],
   leftKnee: ['leftLeg'],
   rightKnee: ['rightLeg'],
+  leftForward: ['leftArm'],
+  rightForward: ['rightArm'],
+  leftElbow3D: ['leftArm'],
+  rightElbow3D: ['rightArm'],
 };
 
 const TIMELINE = [
   { id: 'baby-1', moveId: 'baby', start: 4, end: 7 },
   { id: 'baby-2', moveId: 'baby', start: 7, end: 12 },
-  { id: 'baby-3', moveId: 'baby', start: 12, end: 17 },
+  { id: 'chomp-1', moveId: 'chomp', start: 12, end: 17 },
   { id: 'mommy-1', moveId: 'mommy', start: 19, end: 24 },
   { id: 'mommy-2', moveId: 'mommy', start: 24, end: 29 },
-  { id: 'mommy-3', moveId: 'mommy', start: 29, end: 34 },
+  { id: 'scoop-1', moveId: 'scoop', start: 29, end: 34 },
   { id: 'daddy-1', moveId: 'daddy', start: 36, end: 41 },
   { id: 'daddy-2', moveId: 'daddy', start: 41, end: 46 },
-  { id: 'daddy-3', moveId: 'daddy', start: 46, end: 51 },
-  { id: 'run-1', moveId: 'run', start: 53, end: 60 },
+  { id: 'dive-1', moveId: 'dive', start: 46, end: 51 },
+  { id: 'run-1', moveId: 'run', start: 53, end: 57 },
+  { id: 'swim-1', moveId: 'swim', start: 57, end: 60 },
   { id: 'safe-1', moveId: 'safe', start: 60, end: 68 },
 ];
 

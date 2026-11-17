@@ -1,15 +1,19 @@
 import SerialControlPanel from './components/shared/SerialControlPanel';
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import { useSerialContext } from './components/hooks/SerialContext';
 import { SERVO_CHANNELS, formatPoseLine } from './components/puppetAngles';
 import {SubMenuFooter} from './main-menu';
 
-const NEUTRAL_ANGLE_DEG = 90;
+const NEUTRAL_ANGLE_DEG = 0;
 
 export default function OptionsMenu({onExit, prMode, setPrMode, cameraRotation, setCameraRotation}) {
   const serial = useSerialContext();
   const [transmissionEnabled, setTransmissionEnabled] = useState(true);
+
+  useEffect(() => {
+    console.log("[ESP:correctMoveOverride]", serial.correctMoveOverride);
+  }, [serial.correctMoveOverride]); // This runs every time the state actually changes
 
   function resetLeaderboard() {
     const isConfirmed = window.confirm("Are you sure you want to reset the leaderboard?");
@@ -101,6 +105,7 @@ export function PuppetSettings({serial, transmissionEnabled}) {
   // produces from computeServoAngles() output.
   const sendPose = useCallback((angles) => {
     if (!transmissionEnabled || !isConnected) return;
+    console.log('[ESP32] sending pose:', formatPoseLine(angles));
     serial.sendLine(formatPoseLine(angles));
   }, [serial, transmissionEnabled, isConnected]);
 

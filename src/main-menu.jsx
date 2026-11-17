@@ -4,6 +4,7 @@ import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import SelectMenu from './select-menu';
 import OptionsMenu from './options-menu';
 import LeaderboardScreen from './leaderboard-screen';
+import { useSerialContext } from './components/hooks/SerialContext';
 
 import indian from './assets/menu-screen-bg/indian.jpg';
 import chinese from './assets/menu-screen-bg/malay.jpg';
@@ -13,6 +14,12 @@ import idk from './assets/menu-screen-bg/idk.jpg';
 const prListOfImages = [indian, chinese, malay, idk];
 
 export default function MainMenu() {
+    const serial = useSerialContext();
+
+    useEffect(() => {
+        console.log("[ESP:correctMoveOverride]", serial.correctMoveOverride);
+    }, [serial.correctMoveOverride]); // This runs every time the state actually changes
+
     //Pre laoding
     useEffect(() => {
     preloadPoseModel().catch(() => {});

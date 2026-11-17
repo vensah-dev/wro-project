@@ -21,14 +21,37 @@ const DEFAULT_ANGLE_DEG = 90; // neutral pose, used when a landmark is missing
 const MIN_ANGLE_DEG = 0;
 const MAX_ANGLE_DEG = 180;
 
+const FORWARD_REST_DEG = 0;   // forward shoulders when the move has no `forward` target (arm hanging)
+const KNEE_REST_DEG = 90;     // knees are ignored for now, so they just hold this
+
 export const SERVO_CHANNELS = [
-  { id: 0, name: 'leftShoulder', label: 'Left Shoulder', gpio: 13, triplet: ['leftHip', 'leftShoulder', 'leftElbow'] },
-  { id: 1, name: 'rightShoulder', label: 'Right Shoulder', gpio: 14, triplet: ['rightHip', 'rightShoulder', 'rightElbow'] },
+  { id: 0, name: 'leftShoulder', label: 'Left Shoulder (Side)', gpio: 13, triplet: ['leftHip', 'leftShoulder', 'leftElbow'] },
+  { id: 1, name: 'leftShoulderForward', label: 'Left Shoulder (Forward)', gpio: null, triplet: null, forwardKey: 'left' },
   { id: 2, name: 'leftElbow', label: 'Left Elbow', gpio: 25, triplet: ['leftShoulder', 'leftElbow', 'leftWrist'] },
-  { id: 3, name: 'rightElbow', label: 'Right Elbow', gpio: 26, triplet: ['rightShoulder', 'rightElbow', 'rightWrist'] },
-  { id: 4, name: 'leftHip', label: 'Left Hip', gpio: 27, triplet: ['leftShoulder', 'leftHip', 'leftKnee'] },
-  { id: 5, name: 'rightHip', label: 'Right Hip', gpio: 33, triplet: ['rightShoulder', 'rightHip', 'rightKnee'] },
+
+  { id: 3, name: 'rightShoulderForward', label: 'Right Shoulder (Forward)', gpio: null, triplet: null, forwardKey: 'right' },
+  { id: 4, name: 'rightShoulder', label: 'Right Shoulder (Side)', gpio: 14, triplet: ['rightHip', 'rightShoulder', 'rightElbow'] },
+  { id: 5, name: 'rightElbow', label: 'Right Elbow', gpio: 26, triplet: ['rightShoulder', 'rightElbow', 'rightWrist'] },
+
+  { id: 6, name: 'leftHip', label: 'Left Hip', gpio: 27, triplet: ['leftShoulder', 'leftHip', 'leftKnee'] },
+  { id: 7, name: 'leftKnee', label: 'Left Knee', gpio: 33, triplet: ['leftHip', 'leftKnee', 'leftAnkle'], skip: true },
+
+  { id: 8, name: 'rightHip', label: 'Right Hip', gpio: 33, triplet: ['rightShoulder', 'rightHip', 'rightKnee'] },
+  { id: 9, name: 'rightKnee', label: 'Right Knee', gpio: 33, triplet: ['rightHip', 'rightKnee', 'rightAnkle'], skip: true },
 ];
+
+export function computeServoAngles(targetPose, forward) {
+  if (!targetPose) return null;
+  return SERVO_CHANNELS.map(({ triplet, forwardKey, skip }) => {
+    if (skip) return KNEE_REST_DEG;
+    if (forwardKey) return clampAngle(forward?.[forwardKey] ?? FORWARD_REST_DEG);
+    if (!triplet) return DEFAULT_ANGLE_DEG;
+    
+    const [aName, bName, cName] = triplet;
+    const raw = angleAtVertex(targetPose[aName], targetPose[bName], targetPose[cName]);
+    return clampAngle(raw === null ? DEFAULT_ANGLE_DEG : raw);
+  });
+}
 
 // Interior angle (degrees) at vertex `b`, between vectors b->a and b->c.
 // Works fine on the normalized 2D {x,y} points stored on a move's target
@@ -46,19 +69,7 @@ function angleAtVertex(a, b, c) {
 
 function clampAngle(deg) {
   return Math.round(Math.min(MAX_ANGLE_DEG, Math.max(MIN_ANGLE_DEG, deg)));
-}
-
-// targetPose: the `target` object off a move (moves[i].target), i.e. the
-// same landmark map drawGuideSilhouette reads. Returns an array of 6
-// integers (servo id order 0-5), or null if there's no pose to draw yet.
-export function computeServoAngles(targetPose) {
-  if (!targetPose) return null;
-  return SERVO_CHANNELS.map(({ triplet }) => {
-    const [aName, bName, cName] = triplet;
-    const raw = angleAtVertex(targetPose[aName], targetPose[bName], targetPose[cName]);
-    return clampAngle(raw === null ? DEFAULT_ANGLE_DEG : raw);
-  });
-}
+} 
 
 // Formats the 6 angles as the ESP32's full-pose serial line: "a0,...,a5\n"
 export function formatPoseLine(angles) {

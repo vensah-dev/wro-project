@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { CONFIG } from '../config';
+import { useSerialContext } from '../hooks/SerialContext';
 
 // ============================================================
 // HOOK: per-window scoring — Compete mode only
@@ -10,6 +11,7 @@ export function useCompeteScoring({ currentTime, currentEntry, confirmedMoveId, 
   const activeWindowIdRef = useRef(null);
   const frameCountsRef = useRef({ correct: 0, total: 0 });
   const comboRef = useRef(0);
+  const serial = useSerialContext();
 
   const [score, setScore] = useState(0);
   const [combo, setCombo] = useState(0);
@@ -21,7 +23,14 @@ export function useCompeteScoring({ currentTime, currentEntry, confirmedMoveId, 
     const accuracy = total > 0 ? correct / total : 0;
 
     let tier, points;
-    if (accuracy >= CONFIG.PERFECT_ACCURACY) { tier = 'Perfect!'; points = CONFIG.POINTS_PERFECT; }
+
+    console.log("correctMoveOverride from scoring",serial.correctMoveOverride);
+    if (serial.correctMoveOverride === true){
+      serial.setCorrectMoveOverride(false);
+      console.log("correctMoveOverride from scoring",serial.correctMoveOverride);
+      tier = 'Perfect!'; points = CONFIG.POINTS_PERFECT;
+    } 
+    else if (accuracy >= CONFIG.PERFECT_ACCURACY) { tier = 'Perfect!'; points = CONFIG.POINTS_PERFECT; }
     else if (accuracy >= CONFIG.GOOD_ACCURACY) { tier = 'Good'; points = CONFIG.POINTS_GOOD; }
     else { tier = 'Miss'; points = CONFIG.POINTS_MISS; }
 
@@ -33,7 +42,7 @@ export function useCompeteScoring({ currentTime, currentEntry, confirmedMoveId, 
     setCombo(comboRef.current);
     setJudgement({ text: tier, key: `${entry.id}-${Date.now()}` });
     setWindowResults((rs) => [...rs, { entryId: entry.id, moveId: entry.moveId, accuracy, tier }]);
-  }, []);
+  }, [serial.correctMoveOverride]);
 
   // finalize whatever window is active right now — used both on natural
   // window transitions and when the song ends mid-window
@@ -69,6 +78,7 @@ export function useCompeteScoring({ currentTime, currentEntry, confirmedMoveId, 
     setScore(0);
     setCombo(0);
     setJudgement(null);
+    serial.setCorrectMoveOverride(false);
     setWindowResults([]);
   }, []);
 

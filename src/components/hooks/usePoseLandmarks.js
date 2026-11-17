@@ -157,11 +157,17 @@ export function usePoseLandmarks({ videoRef, canvasRef, onFrame }) {
       minDetectionConfidence: 0.77,
       minTrackingConfidence: 0.72,
     });
+
     pose.onResults((results) => {
       if (cancelled) return;
-      onFrame(results.poseLandmarks || null, canvasCtx, canvasElement);
+      onFrame(
+        results.poseLandmarks || null,
+        canvasCtx,
+        canvasElement,
+        results.poseWorldLandmarks || null,   // NEW
+      );
     });
-
+    
     camera = new window.Camera(videoElement, {
       onFrame: async () => {
         if (cancelled) return;

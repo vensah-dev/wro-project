@@ -3,6 +3,7 @@ import { usePoseLandmarks } from '../hooks/usePoseLandmarks';
 import { computeFrameAngles } from '../geometry';
 import { matchBestMove } from '../scoring';
 import { CONFIG } from '../config';
+import { computeForwardAngles } from '../forwardArm';
 
 // ============================================================
 // Self-contained pose-skeleton drawing (no @mediapipe/drawing_utils)
@@ -96,7 +97,10 @@ export function useCompetePosePipeline({ videoRef, canvasRef, expectedMoveId, mo
     }
     setIsPersonVisible(true);
 
-    const angles = computeFrameAngles(landmarks);
+    const angles = {
+      ...computeFrameAngles(landmarks),
+      ...computeForwardAngles(landmarks, worldLandmarks, canvasElement),
+    };
     const detected = matchBestMove(movesRef.current, angles);
     const detectedId = detected ? detected.id : null;
 

@@ -16,6 +16,9 @@ const BAUD_RATE = 115200;
 export function useWebSerial() {
   const [status, setStatus] = useState('disconnected'); // 'disconnected' | 'connecting' | 'connected' | 'error'
   const [errorMessage, setErrorMessage] = useState(null);
+  const [ESPSerial, setESPSerial] = useState(null);
+  const [correctMoveOverride, setCorrectMoveOverride] = useState(false);
+
 
   const portRef = useRef(null);
   const writerRef = useRef(null);
@@ -39,7 +42,16 @@ export function useWebSerial() {
         while ((newlineIndex = buffer.indexOf('\n')) >= 0) {
           const line = buffer.slice(0, newlineIndex).trim();
           buffer = buffer.slice(newlineIndex + 1);
-          if (line) console.log('[ESP32]', line);
+          if (line){
+
+            if(line == "MoveOver:true"){
+              setCorrectMoveOverride(true);
+            } else if(line == "MoveOver:false"){
+              setCorrectMoveOverride(false);
+            }
+
+            console.log('[ESP32]', line);
+          }
         }
       }
     } catch (err) {
@@ -106,6 +118,7 @@ export function useWebSerial() {
   const sendLine = useCallback(async (line) => {
     if (!writerRef.current) return false;
     try {
+      console.log('[ESP32] sending line:', line.trim());
       await writerRef.current.write(line);
       return true;
     } catch (err) {
@@ -113,9 +126,10 @@ export function useWebSerial() {
       return false;
     }
   }, []);
+  
 
   // make sure the port gets released if the provider unmounts mid-session
   useEffect(() => () => { disconnect(); }, [disconnect]);
 
-  return { isSupported, status, errorMessage, connect, disconnect, sendLine };
+  return { isSupported, status, errorMessage, connect, disconnect, sendLine, ESPSerial, correctMoveOverride, setCorrectMoveOverride };
 }

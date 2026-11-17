@@ -16,7 +16,7 @@ const CHANGE_THRESHOLD_DEG = 2;
 
 export function useCompetePuppetSync({ expectedMove, sendLine, isConnected, transmissionEnabled }) {
   const angles = useMemo(
-    () => computeServoAngles(expectedMove?.target ?? null),
+    () => computeServoAngles(expectedMove?.target ?? null, expectedMove?.forward),
     [expectedMove]
   );
 
