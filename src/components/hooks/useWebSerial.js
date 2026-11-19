@@ -44,10 +44,14 @@ export function useWebSerial() {
           buffer = buffer.slice(newlineIndex + 1);
           if (line){
 
-            if(line == "MoveOver:true"){
-              setCorrectMoveOverride(true);
-            } else if(line == "MoveOver:false"){
-              setCorrectMoveOverride(false);
+            if(line == "MoveOver:good"){
+              setCorrectMoveOverride('good');
+              
+            } else if(line == "MoveOver:perfect"){
+              setCorrectMoveOverride('perfect');
+
+            } else if(line == "MoveOver:null"){
+              setCorrectMoveOverride(null);
             }
 
             console.log('[ESP32]', line);

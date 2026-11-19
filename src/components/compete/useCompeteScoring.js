@@ -25,10 +25,18 @@ export function useCompeteScoring({ currentTime, currentEntry, confirmedMoveId, 
     let tier, points;
 
     console.log("correctMoveOverride from scoring",serial.correctMoveOverride);
-    if (serial.correctMoveOverride === true){
+
+    if (serial.correctMoveOverride === 'perfect'){
       serial.setCorrectMoveOverride(false);
-      console.log("correctMoveOverride from scoring",serial.correctMoveOverride);
-      tier = 'Perfect!'; points = CONFIG.POINTS_PERFECT;
+      console.log("correctMoveOverride from scoring", serial.correctMoveOverride);
+      tier = 'Perfect!'; 
+      points = CONFIG.POINTS_PERFECT;
+    } 
+    else if (serial.correctMoveOverride === 'good'){
+      serial.setCorrectMoveOverride(false);
+      console.log("correctMoveOverride from scoring", serial.correctMoveOverride);
+      tier = 'Good'; 
+      points = CONFIG.POINTS_GOOD;
     } 
     else if (accuracy >= CONFIG.PERFECT_ACCURACY) { tier = 'Perfect!'; points = CONFIG.POINTS_PERFECT; }
     else if (accuracy >= CONFIG.GOOD_ACCURACY) { tier = 'Good'; points = CONFIG.POINTS_GOOD; }
@@ -78,7 +86,7 @@ export function useCompeteScoring({ currentTime, currentEntry, confirmedMoveId, 
     setScore(0);
     setCombo(0);
     setJudgement(null);
-    serial.setCorrectMoveOverride(false);
+    serial.setCorrectMoveOverride(null);
     setWindowResults([]);
   }, []);
 
